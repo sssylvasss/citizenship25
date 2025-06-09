@@ -14,16 +14,23 @@ dotenv.config();
 const mongoUrl = process.env.MONGO_URL || 'mongodb://127.0.0.1:27017/spaceAPI';
 const jwtSecret = process.env.JWT_SECRET || 'fallback_secret';
 
-mongoose.connect(mongoUrl, {
+// Updated MongoDB connection options
+const mongooseOptions = {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
-	useCreateIndex: true,
-	useFindAndModify: false,
-}).then(() => {
-	console.log('Connected to MongoDB');
-}).catch((error) => {
-	console.error('Failed to connect to MongoDB:', error);
-});
+	dbName: 'spaceAPI',  // Specify database name explicitly
+	retryWrites: true,
+	w: 'majority',
+	ssl: true
+};
+
+mongoose.connect(mongoUrl, mongooseOptions)
+	.then(() => {
+		console.log('Connected to MongoDB');
+	})
+	.catch((error) => {
+		console.error('Failed to connect to MongoDB:', error);
+	});
 
 mongoose.Promise = Promise;
 
