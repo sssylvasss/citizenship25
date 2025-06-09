@@ -1,4 +1,4 @@
-const BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080';
+const BASE_URL = process.env.REACT_APP_API_URL || 'https://citisenship25.onrender.com';
 
 // Helper function to construct API URLs
 export const API_URL = (endpoint) => {
