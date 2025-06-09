@@ -1,0 +1,49 @@
+html {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: "Trispace", serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+  outline: none;
+  font-family: "Trispace", serif;
+}
+
+button {
+  outline: none;
+  border: none;
+  cursor: pointer;
+  font-family: "Trispace", serif;
+}
+
+.carousel .thumbs-wrapper {
+  margin: 0 !important;
+}
+
+.carousel.carousel-slider .control-arrow:hover {
+    background: rgba(0,0,0,0) !important;
+}
+
+.carousel .control-dots {
+  bottom: -2% !important;
+}
+
+.carousel.carousel-slider .control-arrow {
+  bottom: -96% !important;
+}

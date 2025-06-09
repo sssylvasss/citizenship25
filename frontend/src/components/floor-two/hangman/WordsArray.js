@@ -1,0 +1,18 @@
+export const words = [
+  'astronaut',
+  'apollo',
+  'mercury',
+  'jupiter',
+  'uranus',
+  'pluto',
+  'neptune',
+  'venus',
+  'saturn',
+  'earth',
+  'moon',
+  'commander',
+  'citizen',
+  'asteroid',
+  'satellite',
+  'star',
+];
