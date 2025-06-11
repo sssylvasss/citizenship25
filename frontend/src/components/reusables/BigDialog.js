@@ -17,6 +17,7 @@ import {
   Blue,
 } from "./Styling";
 
+/* eslint-disable indent */
 export const BigDialog = ({
   open,
   titleText,

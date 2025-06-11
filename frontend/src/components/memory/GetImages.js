@@ -1,7 +1,7 @@
 import { CARD_STATUS, DECK_SIZE, API_PAGE_SIZE, BASE_URL } from "./constants";
 
 // Create new game
-export const GetImages = async () => {
+export const getImages = async () => {
   const urls = await getRandomUrls();
   const deck = urls.concat(urls);
 

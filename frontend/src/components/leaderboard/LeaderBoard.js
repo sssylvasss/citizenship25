@@ -28,6 +28,7 @@ import {
   InvestItemsContainer,
 } from "./Styling";
 
+/* eslint-disable indent */
 export const LeaderBoard = () => {
   const [leaderBoard, setLeaderBoard] = useState([]);
   const [sort, setSort] = useState("highestRanking");

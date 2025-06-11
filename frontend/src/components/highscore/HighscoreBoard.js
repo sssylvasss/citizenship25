@@ -69,3 +69,5 @@ export const HighscoreBoard = () => {
     </>
   );
 };
+
+/* eslint-disable indent */

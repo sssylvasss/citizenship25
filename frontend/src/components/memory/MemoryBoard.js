@@ -1,8 +1,9 @@
+/* eslint-disable indent */
 import React, { useState, useEffect, useCallback, useRef } from "react";
 
 import audio from "../../assets/Cards 6010_56_6.wav";
 import { MemoryCard } from "./MemoryCard";
-import { GetImages } from "./GetImages";
+import { getImages } from "./GetImages";
 import { GameTitle } from "../reusables/GameTitle";
 import { GameScore } from "../reusables/GameScore";
 import { CARD_STATUS, GAME_STATUS, DECK_SIZE } from "./constants";
@@ -18,6 +19,13 @@ export const MemoryBoard = ({ gameStatus, onGameUpdate }) => {
   // Setting flip count
   const flipCounter = useRef(0);
   const isMounted = useRef(false);
+
+  // Reset all cards
+  const resetCards = () => {
+    setFirstCard(null);
+    setSecondCard(null);
+    setIsChecking(false);
+  };
 
   // Check if the flipped cards match
   const checkPair = useCallback(() => {
@@ -45,13 +53,6 @@ export const MemoryBoard = ({ gameStatus, onGameUpdate }) => {
       setTimeout(resetCards, 800);
     }
   }, [deck, firstCard, secondCard]);
-
-  // Reset all cards
-  const resetCards = () => {
-    setFirstCard(null);
-    setSecondCard(null);
-    setIsChecking(false);
-  };
 
   const toggleCard = (index, status) => {
     const newDeck = { ...deck };
@@ -87,13 +88,13 @@ export const MemoryBoard = ({ gameStatus, onGameUpdate }) => {
   const checkGameFinished = useCallback(() => {
     if (openCardCounter === 0) {
       const matches = Object.keys(deck).filter(
-        (key) => deck[key].status === CARD_STATUS.MATCHED,
+        (key) => deck[key].status === CARD_STATUS.MATCHED
       );
 
       // Game is finished
       if (matches.length === DECK_SIZE) {
         onGameUpdate(GAME_STATUS.FINISHED, {
-          flips: flipCounter.current,
+          flips: flipCounter.current
         });
       }
     } else if (openCardCounter === 2) {
@@ -105,7 +106,7 @@ export const MemoryBoard = ({ gameStatus, onGameUpdate }) => {
   // Start the game
   const startGame = useCallback(async () => {
     try {
-      const newDeck = await GetImages();
+      const newDeck = await getImages();
       setDeck(newDeck);
       flipCounter.current = 0;
       onGameUpdate(GAME_STATUS.IN_PROGRESS);
@@ -148,16 +149,14 @@ export const MemoryBoard = ({ gameStatus, onGameUpdate }) => {
       <Container>
         <GameContainer>
           <GameGrid>
-            {Object.entries(deck).map(([key, value]) => {
-              return (
-                <MemoryCard
-                  key={key}
-                  index={key}
-                  data={value}
-                  handleClick={handleClick}
-                />
-              );
-            })}
+            {Object.entries(deck).map(([key, value]) => (
+              <MemoryCard
+                key={key}
+                index={key}
+                data={value}
+                handleClick={handleClick}
+              />
+            ))}
           </GameGrid>
         </GameContainer>
       </Container>

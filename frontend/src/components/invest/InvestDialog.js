@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import Dialog from "@mui/material/Dialog";
 
 import { SmallDialog } from "../reusables/SmallDialog";

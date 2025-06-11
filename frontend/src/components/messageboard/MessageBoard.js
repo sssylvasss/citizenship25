@@ -20,6 +20,7 @@ import {
   Username,
 } from "./Styling";
 
+/* eslint-disable indent */
 export const MessageBoard = ({ onClick }) => {
   const [messageList, setMessageList] = useState([]);
   const [newMessage, setNewMessage] = useState("");

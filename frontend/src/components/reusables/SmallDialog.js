@@ -11,6 +11,7 @@ import {
   ConfirmedButton,
 } from "./Styling";
 
+/* eslint-disable indent */
 export const SmallDialog = ({
   open,
   headerText,
