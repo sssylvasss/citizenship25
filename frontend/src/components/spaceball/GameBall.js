@@ -1,22 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 
-import audio from '../../assets/ElectHitZap PE1030530.wav';
-import { updateBadges, updateHighscoreSpaceball } from '../../reducers/profile';
-import { Header } from '../header/Header';
-import { Camera } from '../header/Camera';
-import { BadgesAnimation } from '../../components/animations/BadgesAnimation';
-import { GameTitle } from '../reusables/GameTitle';
-import { GameScore } from '../reusables/GameScore';
-import { GameFinish } from '../reusables/GameFinish';
-import { 
-  MainContainer,  
-  ButtonOne, 
-  ButtonTwo, 
-  ButtonThree, 
+import audio from "../../assets/ElectHitZap PE1030530.wav";
+import { updateBadges, updateHighscoreSpaceball } from "../../reducers/profile";
+import { Header } from "../header/Header";
+import { Camera } from "../header/Camera";
+import { BadgesAnimation } from "../../components/animations/BadgesAnimation";
+import { GameTitle } from "../reusables/GameTitle";
+import { GameScore } from "../reusables/GameScore";
+import { GameFinish } from "../reusables/GameFinish";
+import {
+  MainContainer,
+  ButtonOne,
+  ButtonTwo,
+  ButtonThree,
   ButtonFour,
-  ButtonFive } from './Styling';
+  ButtonFive,
+} from "./Styling";
 
 export const GameBall = () => {
   const [score, setScore] = useState(0);
@@ -32,14 +33,14 @@ export const GameBall = () => {
 
   useEffect(() => {
     if (!accessToken) {
-      navigate('/signin');
+      navigate("/signin");
     }
   }, [accessToken, navigate]);
 
   // Initializing timer
   useEffect(() => {
     const timer =
-    counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
+      counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
     return () => clearInterval(timer);
   }, [counter]);
 
@@ -48,13 +49,13 @@ export const GameBall = () => {
   // Update badges, set animation and push to main
   const onCollectBadges = () => {
     if (score > highscore) {
-      dispatch(updateHighscoreSpaceball(score))
+      dispatch(updateHighscoreSpaceball(score));
     }
     dispatch(updateBadges(numOfBadges));
     setAnimation(true);
     setTimeout(() => {
-      navigate('/')
-    }, 1000)
+      navigate("/");
+    }, 1000);
   };
 
   // Finish game when time is up
@@ -62,24 +63,24 @@ export const GameBall = () => {
     if (counter === 0) {
       setOpenFinishedDialog(true);
     }
-  }, [counter])
-  
+  }, [counter]);
+
   const onClickScore = (number) => {
     new Audio(audio).play();
     setScore(score + number);
   };
-
 
   return (
     <>
       <Header />
       <Camera />
       <MainContainer>
-        <GameTitle text='Space Ball' />
+        <GameTitle text="Space Ball" />
         <GameScore
-          type='Score:'
-          score={score || '0'}
-          counter={counter.toString().padStart(2, '0')} />
+          type="Score:"
+          score={score || "0"}
+          counter={counter.toString().padStart(2, "0")}
+        />
         <ButtonOne onClick={() => onClickScore(4)}></ButtonOne>
         <ButtonTwo onClick={() => onClickScore(3)}></ButtonTwo>
         <ButtonThree onClick={() => onClickScore(1)}></ButtonThree>
@@ -87,15 +88,16 @@ export const GameBall = () => {
         <ButtonFive onClick={() => onClickScore(5)}></ButtonFive>
         <GameFinish
           open={openFinishedDialog}
-          topText='You managed to get'
+          topText="You managed to get"
           score={score}
-          textTwo='points which is'
+          textTwo="points which is"
           points={numOfBadges}
-          textThree='badges!' 
+          textThree="badges!"
           onClick={onCollectBadges}
-          button={score > 0 ? 'Collect badges' : 'Sorry, no badges this time'} />
+          button={score > 0 ? "Collect badges" : "Sorry, no badges this time"}
+        />
       </MainContainer>
-     { animation && <BadgesAnimation text={numOfBadges} /> }
+      {animation && <BadgesAnimation text={numOfBadges} />}
     </>
-  )
+  );
 };

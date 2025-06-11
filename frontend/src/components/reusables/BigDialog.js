@@ -1,8 +1,7 @@
-import React from 'react';
-import Dialog from '@mui/material/Dialog';
+import Dialog from "@mui/material/Dialog";
 
-import { 
-  BigDialogContainer, 
+import {
+  BigDialogContainer,
   InfoTitle,
   InfoText,
   CloseIconBig,
@@ -15,14 +14,15 @@ import {
   Pink,
   Green,
   Orange,
-  Blue } from './Styling';
+  Blue,
+} from "./Styling";
 
-export const BigDialog = ({ 
+export const BigDialog = ({
   open,
-  titleText, 
-  onClose, 
-  text, 
-  onClick, 
+  titleText,
+  onClose,
+  text,
+  onClick,
   dialogButton,
   disabled,
   gameButton,
@@ -31,27 +31,30 @@ export const BigDialog = ({
   itemOne,
   itemTwo,
   itemThree,
-  circleList }) => {
+  circleList,
+}) => {
   return (
     <Dialog open={open} onClose={onClose}>
       <BigDialogContainer>
-          <InfoTitle>
-            {titleText}
-            <CloseIconBig onClick={onClose} />
-          </InfoTitle>
+        <InfoTitle>
+          {titleText}
+          <CloseIconBig onClick={onClose} />
+        </InfoTitle>
         <InfoText>{text}</InfoText>
-        {list && <List>
-          <ListItem>{itemOne}</ListItem>
-          <ListItem>{itemTwo}</ListItem>
-          {itemThree && <ListItem>{itemThree}</ListItem>}
-        </List>}
-        {circleList && 
+        {list && (
+          <List>
+            <ListItem>{itemOne}</ListItem>
+            <ListItem>{itemTwo}</ListItem>
+            {itemThree && <ListItem>{itemThree}</ListItem>}
+          </List>
+        )}
+        {circleList && (
           <>
             <CirclePoint>
               <Purple></Purple> - 1 point
             </CirclePoint>
             <CirclePoint>
-            <Green></Green> - 1 point
+              <Green></Green> - 1 point
             </CirclePoint>
             <CirclePoint>
               <Pink></Pink> - 2 points
@@ -62,10 +65,17 @@ export const BigDialog = ({
             <CirclePoint>
               <Orange></Orange> - 4 points
             </CirclePoint>
-           </>}
-        {dialogButton && <DialogButton onClick={onClick} disabled={disabled}>{dialogButton}</DialogButton>}
-        {gameButton && <StartGameButton to={gameLink}>{gameButton}</StartGameButton>}
+          </>
+        )}
+        {dialogButton && (
+          <DialogButton onClick={onClick} disabled={disabled}>
+            {dialogButton}
+          </DialogButton>
+        )}
+        {gameButton && (
+          <StartGameButton to={gameLink}>{gameButton}</StartGameButton>
+        )}
       </BigDialogContainer>
     </Dialog>
-  )
+  );
 };

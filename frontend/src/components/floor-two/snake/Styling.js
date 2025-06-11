@@ -1,10 +1,11 @@
-import styled from 'styled-components';
-import { 
-  FaArrowRight, 
+import styled from "styled-components";
+import {
+  FaArrowRight,
   FaArrowLeft,
   FaArrowDown,
   FaArrowUp,
-  FaBone } from 'react-icons/fa';
+  FaBone,
+} from "react-icons/fa";
 
 export const MainContainer = styled.div`
   width: 100%;
@@ -15,13 +16,13 @@ export const MainContainer = styled.div`
   justify-content: center;
   position: fixed;
   color: #000;
-  background-color: #B9D8CB;
+  background-color: #b9d8cb;
 `;
 
 export const PhoneContainer = styled.div`
   position: relative;
   border-radius: 10% 10% 20% 20% / 10% 10% 20% 20%;
-  background-color: #403F4E;
+  background-color: #403f4e;
   padding: 10px 5px;
   display: flex;
   flex-direction: column;
@@ -34,7 +35,7 @@ export const PhoneContainer = styled.div`
 
 export const PhoneName = styled.p`
   font-size: 18px;
-  color: #A8A7AC;
+  color: #a8a7ac;
   margin: 10px 0;
   @media (min-width: 768px) {
     margin: 18px 0;
@@ -54,7 +55,7 @@ export const ButtonContainer = styled.div`
 `;
 
 export const StartButton = styled.button`
-  background-color: #A8A7AC;
+  background-color: #a8a7ac;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -73,7 +74,7 @@ export const NumberButton = styled.button`
   width: 28%;
   margin: 5px;
   border-radius: 10px;
-  background-color: #A8A7AC;
+  background-color: #a8a7ac;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -128,8 +129,8 @@ export const SnakeContainer = styled.div`
   position: relative;
   height: 16rem;
   width: 22rem;
-  background-color: #59734E;
-  border: 5px solid #A8A7AC;
+  background-color: #59734e;
+  border: 5px solid #a8a7ac;
   border-radius: 5px;
   padding: 5px;
   z-index: 2;
@@ -139,10 +140,10 @@ export const SnakeItem = styled.div`
   position: absolute;
   width: 1.7rem;
   height: 1.7rem;
-  background-color: #1B1F0C;
+  background-color: #1b1f0c;
   z-index: 3;
-  top: ${props => props.top};
-	left: ${props => props.left};
+  top: ${(props) => props.top};
+  left: ${(props) => props.left};
 `;
 
 export const Food = styled(FaBone)`
@@ -158,14 +159,14 @@ export const Food = styled(FaBone)`
 export const Button = styled.button`
   padding: 10px 15px;
   margin-top: 20px;
-  background-color: #AAC49C;
-  border: 2px solid #47553E;
+  background-color: #aac49c;
+  border: 2px solid #47553e;
   color: #000;
   font-size: 16px;
   width: fit-content;
   height: fit-content;
   text-transform: uppercase;
-  font-family: 'Trispace';
+  font-family: "Trispace";
   cursor: pointer;
   :hover {
     transform: scale(1.1);

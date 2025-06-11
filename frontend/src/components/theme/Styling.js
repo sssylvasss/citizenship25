@@ -1,11 +1,11 @@
-import styled from 'styled-components';
-import { 
-  lightTheme, 
-  blueTheme, 
-  redTheme, 
-  grayTheme, 
-  brownTheme 
-} from '../../styledcomponents/StyledTheme';
+import styled from "styled-components";
+import {
+  lightTheme,
+  blueTheme,
+  redTheme,
+  grayTheme,
+  brownTheme,
+} from "../../styledcomponents/StyledTheme";
 
 export const ButtonContainer = styled.div`
   display: flex;
@@ -17,7 +17,7 @@ export const ButtonContainer = styled.div`
 export const ThemeTitle = styled.p`
   font-size: 12px;
   margin-right: 5px;
-  color: ${props => props.theme.colors.text};
+  color: ${(props) => props.theme.colors.text};
   @media (min-width: 768px) {
     font-size: 14px;
   }
@@ -34,12 +34,12 @@ const Button = styled.button`
   height: 25px;
   margin: 0 5px;
   border-radius: 50%;
-  border: 2px solid ${props => props.theme.colors.secondary};
+  border: 2px solid ${(props) => props.theme.colors.secondary};
   cursor: pointer;
   transition: transform 0.2s;
   &:hover {
     transform: scale(1.1);
-    border-color: ${props => props.theme.colors.accent};
+    border-color: ${(props) => props.theme.colors.accent};
   }
 `;
 

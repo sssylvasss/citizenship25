@@ -1,7 +1,7 @@
-import { API_URL } from '../utils/utils';
+import { API_URL } from "../utils/utils";
 
 // Citizen API
-export const CITIZEN_URL = (slug) => API_URL(slug);
+export const getCitizenUrl = (slug) => API_URL(slug);
 
 // Description Cards
 export const WEATHER_API = `https://api.openweathermap.org/data/2.5/weather?q=Albuquerque&appid=43ba64a4c8501d0a42ad450861b82e40`;

@@ -7,7 +7,7 @@ export const themes = createSlice({
   initialState: { theme: grayTheme },
   reducers: {
     changeTheme: (state, action) => {
-        state.theme = action.payload;
-      },
-  }
+      state.theme = action.payload;
+    },
+  },
 });

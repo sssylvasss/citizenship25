@@ -3,7 +3,7 @@ export const show = (setter) => {
   setTimeout(() => {
     setter(false);
   }, 2000);
-}
+};
 
 export const checkWin = (correct, wrong, word) => {
   let status = "win";

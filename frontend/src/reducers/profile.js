@@ -1,372 +1,360 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { API_URL } from '../utils/utils';
+import { createSlice } from "@reduxjs/toolkit";
+import { API_URL } from "../utils/utils";
 
-const initialState = localStorage.getItem('profile') 
-? {
-	username: JSON.parse(localStorage.getItem('profile')).username,
-	email: JSON.parse(localStorage.getItem('profile')).email,
-	accessToken: JSON.parse(localStorage.getItem('profile')).accessToken,
-	userId: JSON.parse(localStorage.getItem('profile')).userId,
-	badges: JSON.parse(localStorage.getItem('profile')).badges,
-	ranking: JSON.parse(localStorage.getItem('profile')).ranking,
-	coins: JSON.parse(localStorage.getItem('profile')).coins,
-	createdAt: JSON.parse(localStorage.getItem('profile')).createdAt,
-	avatar: JSON.parse(localStorage.getItem('profile')).avatar,
-	items: JSON.parse(localStorage.getItem('profile')).items,
-	investments: JSON.parse(localStorage.getItem('profile')).investments,
-	investmentQuantity: JSON.parse(localStorage.getItem('profile')).investmentQuantity,
-	energy: JSON.parse(localStorage.getItem('profile')).energy,
-	highscoreSpaceball: JSON.parse(localStorage.getItem('profile')).highscoreSpaceball,
-	highscoreFish: JSON.parse(localStorage.getItem('profile')).highscoreFish,
-	highscoreMath: JSON.parse(localStorage.getItem('profile')).highscoreMath,
-	errorMessage: null
-}
-: {
-	username: null,
-	email: null,
-	accessToken: null,
-	userId: null,
-	badges: null,
-	ranking: null,
-	coins: null,
-	createdAt: null,
-	avatar: 'man',
-	items: [],
-	investments: null,
-	investmentQuantity: null,
-	energy: null,
-	highscoreSpaceball: null,
-	highscoreFish: null,
-	highscoreMath: null,
-	errorMessage: null
-}
+const initialState = localStorage.getItem("profile")
+  ? {
+      username: JSON.parse(localStorage.getItem("profile")).username,
+      email: JSON.parse(localStorage.getItem("profile")).email,
+      accessToken: JSON.parse(localStorage.getItem("profile")).accessToken,
+      userId: JSON.parse(localStorage.getItem("profile")).userId,
+      badges: JSON.parse(localStorage.getItem("profile")).badges,
+      ranking: JSON.parse(localStorage.getItem("profile")).ranking,
+      coins: JSON.parse(localStorage.getItem("profile")).coins,
+      createdAt: JSON.parse(localStorage.getItem("profile")).createdAt,
+      avatar: JSON.parse(localStorage.getItem("profile")).avatar,
+      items: JSON.parse(localStorage.getItem("profile")).items,
+      investments: JSON.parse(localStorage.getItem("profile")).investments,
+      investmentQuantity: JSON.parse(localStorage.getItem("profile"))
+        .investmentQuantity,
+      energy: JSON.parse(localStorage.getItem("profile")).energy,
+      highscoreSpaceball: JSON.parse(localStorage.getItem("profile"))
+        .highscoreSpaceball,
+      highscoreFish: JSON.parse(localStorage.getItem("profile")).highscoreFish,
+      highscoreMath: JSON.parse(localStorage.getItem("profile")).highscoreMath,
+      errorMessage: null,
+    }
+  : {
+      username: null,
+      email: null,
+      accessToken: null,
+      userId: null,
+      badges: null,
+      ranking: null,
+      coins: null,
+      createdAt: null,
+      avatar: "man",
+      items: [],
+      investments: null,
+      investmentQuantity: null,
+      energy: null,
+      highscoreSpaceball: null,
+      highscoreFish: null,
+      highscoreMath: null,
+      errorMessage: null,
+    };
 
 export const profile = createSlice({
-	name: 'profile',
-	initialState,
-	reducers: {
-		setUsername: (store, action) => {
-			store.username = action.payload;
-		},
-		setEmail: (store, action) => {
-			store.email = action.payload;
-		},
-		setAccessToken: (store, action) => {
-			store.accessToken = action.payload;
-		},
-		setUserId: (store, action) => {
-			store.userId = action.payload;
-		},
-		setBadges: (store, action) => {
-			store.badges = action.payload;
-		},
-		setRanking: (store, action) => {
-			store.ranking = action.payload;
-		},
-		setCoins: (store, action) => {
-			store.coins = action.payload;
-		},
-		setCreatedAt: (store, action) => {
-			store.createdAt = action.payload;
-		},
-		setAvatar: (store, action) => {
-			store.avatar = action.payload;
-		},
-		setItems: (store, action) => {
-			store.items = action.payload;
-		},
-		setInvestments: (store, action) => {
-			store.investmentQuantity = action.payload.quantity;
-			store.investments = action.payload.amount;
-		},
-		setInvestmentQuantity: (store, action) => {
-			store.investmentQuantity = action.payload;
-		},
-		setEnergy: (store, action) => {
-			store.energy = action.payload;
-		},
-		setHighscoreSpaceball: (store, action) => {
-			store.highscoreSpaceball = action.payload;
-		},
-		setHighscoreFish: (store, action) => {
-			store.highscoreFish = action.payload;
-		},
-		setHighscoreMath: (store, action) => {
-			store.highscoreMath = action.payload;
-		},
-		setErrorMessage: (store, action) => {
-			store.errorMessage = action.payload;
-		},
-		setLogOut: () => {
-			localStorage.clear();
-			return {
-				username: null,
-				email: null,
-				accessToken: null,
-				userId: null,
-				badges: null,
-				ranking: null,
-				coins: null,
-				items: [],
-				avatar: 'man',
-				createdAt: null,
-				investments: null,
-				investmentQuantity: null,
-				energy: null,
-				highscoreSpaceball: null,
-				highscoreFish: null,
-				highscoreMath: null,
-				errorMessage: null
-			};
-		},
-	},
+  name: "profile",
+  initialState,
+  reducers: {
+    setUsername: (store, action) => {
+      store.username = action.payload;
+    },
+    setEmail: (store, action) => {
+      store.email = action.payload;
+    },
+    setAccessToken: (store, action) => {
+      store.accessToken = action.payload;
+    },
+    setUserId: (store, action) => {
+      store.userId = action.payload;
+    },
+    setBadges: (store, action) => {
+      store.badges = action.payload;
+    },
+    setRanking: (store, action) => {
+      store.ranking = action.payload;
+    },
+    setCoins: (store, action) => {
+      store.coins = action.payload;
+    },
+    setCreatedAt: (store, action) => {
+      store.createdAt = action.payload;
+    },
+    setAvatar: (store, action) => {
+      store.avatar = action.payload;
+    },
+    setItems: (store, action) => {
+      store.items = action.payload;
+    },
+    setInvestments: (store, action) => {
+      store.investmentQuantity = action.payload.quantity;
+      store.investments = action.payload.amount;
+    },
+    setInvestmentQuantity: (store, action) => {
+      store.investmentQuantity = action.payload;
+    },
+    setEnergy: (store, action) => {
+      store.energy = action.payload;
+    },
+    setHighscoreSpaceball: (store, action) => {
+      store.highscoreSpaceball = action.payload;
+    },
+    setHighscoreFish: (store, action) => {
+      store.highscoreFish = action.payload;
+    },
+    setHighscoreMath: (store, action) => {
+      store.highscoreMath = action.payload;
+    },
+    setErrorMessage: (store, action) => {
+      store.errorMessage = action.payload;
+    },
+    setLogOut: () => {
+      localStorage.clear();
+      return {
+        username: null,
+        email: null,
+        accessToken: null,
+        userId: null,
+        badges: null,
+        ranking: null,
+        coins: null,
+        items: [],
+        avatar: "man",
+        createdAt: null,
+        investments: null,
+        investmentQuantity: null,
+        energy: null,
+        highscoreSpaceball: null,
+        highscoreFish: null,
+        highscoreMath: null,
+        errorMessage: null,
+      };
+    },
+  },
 });
 
 // Thunk for updating avatar
 export const updateAvatar = (avatar) => {
-	return (dispatch, getState) => {
-		const options = {
-			method: 'PATCH',
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: getState().profile.accessToken,
-			},
-			credentials: 'include',
-			body: JSON.stringify({ avatar }),
-		};
-		fetch(
-			`https://citizen-ship.herokuapp.com/citizen/${getState().profile.userId}/avatar`,
-			options
-		)
-			.then((res) => res.json())
-			.then((data) => {
-				dispatch(profile.actions.setAvatar(data.avatar));
-			})
-			.catch();
-	};
+  return (dispatch, getState) => {
+    const options = {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: getState().profile.accessToken,
+      },
+      credentials: "include",
+      body: JSON.stringify({ avatar }),
+    };
+    fetch(
+      `https://citizen-ship.herokuapp.com/citizen/${getState().profile.userId}/avatar`,
+      options,
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        dispatch(profile.actions.setAvatar(data.avatar));
+      })
+      .catch();
+  };
 };
 
 // Thunk for updating badges
 export const updateBadges = (badges) => {
-	return (dispatch, getState) => {
-		const options = {
-			method: 'PATCH',
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: getState().profile.accessToken,
-			},
-			credentials: 'include',
-			body: JSON.stringify({ badges }),
-		};
-		fetch(
-			API_URL(`citizen/${getState().profile.userId}/badges`),
-			options
-		)
-			.then((res) => {
-				if (!res.ok) {
-					throw new Error(`HTTP error! status: ${res.status}`);
-				}
-				return res.json();
-			})
-			.then((data) => {
-				dispatch(profile.actions.setBadges(data.badges));
-			})
-			.catch((error) => {
-				console.error('Failed to update badges:', error);
-				// You might want to dispatch an error action here
-			});
-	};
+  return (dispatch, getState) => {
+    const options = {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: getState().profile.accessToken,
+      },
+      credentials: "include",
+      body: JSON.stringify({ badges }),
+    };
+    fetch(API_URL(`citizen/${getState().profile.userId}/badges`), options)
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        return res.json();
+      })
+      .then((data) => {
+        dispatch(profile.actions.setBadges(data.badges));
+      })
+      .catch((error) => {
+        console.error("Failed to update badges:", error);
+        // You might want to dispatch an error action here
+      });
+  };
 };
 
 // Thunk for updating ranking
 export const updateRanking = (ranking) => {
-	return (dispatch, getState) => {
-		const options = {
-			method: 'PATCH',
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: getState().profile.accessToken,
-			},
-			credentials: 'include',
-			body: JSON.stringify({ ranking }),
-		};
-		fetch(
-			API_URL(`citizen/${getState().profile.userId}/ranking`),
-			options
-		)
-			.then((res) => res.json())
-			.then((data) => {
-				dispatch(profile.actions.setRanking(data.ranking));
-			})
-			.catch();
-	};
+  return (dispatch, getState) => {
+    const options = {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: getState().profile.accessToken,
+      },
+      credentials: "include",
+      body: JSON.stringify({ ranking }),
+    };
+    fetch(API_URL(`citizen/${getState().profile.userId}/ranking`), options)
+      .then((res) => res.json())
+      .then((data) => {
+        dispatch(profile.actions.setRanking(data.ranking));
+      })
+      .catch();
+  };
 };
 
 // Thunk for updating coins
 export const updateCoins = (coins) => {
-	return (dispatch, getState) => {
-		const options = {
-			method: 'PATCH',
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: getState().profile.accessToken,
-			},
-			credentials: 'include',
-			body: JSON.stringify({ coins }),
-		};
-		fetch(
-			API_URL(`citizen/${getState().profile.userId}/coins`),
-			options
-		)
-			.then((res) => res.json())
-			.then((data) => {
-				dispatch(profile.actions.setCoins(data.coins));
-			})
-			.catch();
-	};
+  return (dispatch, getState) => {
+    const options = {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: getState().profile.accessToken,
+      },
+      credentials: "include",
+      body: JSON.stringify({ coins }),
+    };
+    fetch(API_URL(`citizen/${getState().profile.userId}/coins`), options)
+      .then((res) => res.json())
+      .then((data) => {
+        dispatch(profile.actions.setCoins(data.coins));
+      })
+      .catch();
+  };
 };
 
 // Thunk for updating bought items
 export const updateItems = (items) => {
-	return (dispatch, getState) => {
-		const options = {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: getState().profile.accessToken,
-			},
-			credentials: 'include',
-			body: JSON.stringify( { items } ),
-		};
-		fetch(
-			API_URL(`citizen/${getState().profile.userId}/items`),
-			options
-		)
-			.then((res) => res.json())
-			.then((data) => {
-				dispatch(profile.actions.setItems(data.items));
-			})
-			.catch();
-	};
+  return (dispatch, getState) => {
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: getState().profile.accessToken,
+      },
+      credentials: "include",
+      body: JSON.stringify({ items }),
+    };
+    fetch(API_URL(`citizen/${getState().profile.userId}/items`), options)
+      .then((res) => res.json())
+      .then((data) => {
+        dispatch(profile.actions.setItems(data.items));
+      })
+      .catch();
+  };
 };
 
 // Thunk for updating investments
 export const updateInvestments = (investmentQuantity, investments) => {
-	return (dispatch, getState) => {
-		const options = {
-			method: 'PATCH',
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: getState().profile.accessToken,
-			},
-			credentials: 'include',
-			body: JSON.stringify({ investmentQuantity, investments }),
-		};
-		fetch(
-			API_URL(`citizen/${getState().profile.userId}/investments`),
-			options
-		)
-			.then((res) => res.json())
-			.then((data) => {
-				dispatch(profile.actions.setInvestmentQuantity(data.investmentQuantity));
-				dispatch(profile.actions.setInvestments(data.investments));
-			})
-			.catch();
-	};
+  return (dispatch, getState) => {
+    const options = {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: getState().profile.accessToken,
+      },
+      credentials: "include",
+      body: JSON.stringify({ investmentQuantity, investments }),
+    };
+    fetch(API_URL(`citizen/${getState().profile.userId}/investments`), options)
+      .then((res) => res.json())
+      .then((data) => {
+        dispatch(
+          profile.actions.setInvestmentQuantity(data.investmentQuantity),
+        );
+        dispatch(profile.actions.setInvestments(data.investments));
+      })
+      .catch();
+  };
 };
 
 // Thunk for updating energy intake
 export const updateEnergy = (energy) => {
-	return (dispatch, getState) => {
-		const options = {
-			method: 'PATCH',
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: getState().profile.accessToken,
-			},
-			credentials: 'include',
-			body: JSON.stringify({ energy }),
-		};
-		fetch(
-			API_URL(`citizen/${getState().profile.userId}/energy`),
-			options
-		)
-			.then((res) => res.json())
-			.then((data) => {
-				dispatch(profile.actions.setEnergy(data.energy));
-			})
-			.catch();
-	};
+  return (dispatch, getState) => {
+    const options = {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: getState().profile.accessToken,
+      },
+      credentials: "include",
+      body: JSON.stringify({ energy }),
+    };
+    fetch(API_URL(`citizen/${getState().profile.userId}/energy`), options)
+      .then((res) => res.json())
+      .then((data) => {
+        dispatch(profile.actions.setEnergy(data.energy));
+      })
+      .catch();
+  };
 };
 
 // Thunk for updating highscore spaceball
 export const updateHighscoreSpaceball = (highscoreSpaceball) => {
-	return (dispatch, getState) => {
-		const options = {
-			method: 'PATCH',
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: getState().profile.accessToken,
-			},
-			credentials: 'include',
-			body: JSON.stringify({ highscoreSpaceball }),
-		};
-		fetch(
-			API_URL(`citizen/${getState().profile.userId}/highscoreSpaceball`),
-			options
-		)
-			.then((res) => res.json())
-			.then((data) => {
-				dispatch(profile.actions.setHighscoreSpaceball(data.highscoreSpaceball));
-			})
-			.catch();
-	};
+  return (dispatch, getState) => {
+    const options = {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: getState().profile.accessToken,
+      },
+      credentials: "include",
+      body: JSON.stringify({ highscoreSpaceball }),
+    };
+    fetch(
+      API_URL(`citizen/${getState().profile.userId}/highscoreSpaceball`),
+      options,
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        dispatch(
+          profile.actions.setHighscoreSpaceball(data.highscoreSpaceball),
+        );
+      })
+      .catch();
+  };
 };
 
 // Thunk for updating highscore fish farm
 export const updateHighscoreFish = (highscoreFish) => {
-	return (dispatch, getState) => {
-		const options = {
-			method: 'PATCH',
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: getState().profile.accessToken,
-			},
-			credentials: 'include',
-			body: JSON.stringify({ highscoreFish }),
-		};
-		fetch(
-			API_URL(`citizen/${getState().profile.userId}/highscoreFish`),
-			options
-		)
-			.then((res) => res.json())
-			.then((data) => {
-				dispatch(profile.actions.setHighscoreFish(data.highscoreFish));
-			})
-			.catch();
-	};
+  return (dispatch, getState) => {
+    const options = {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: getState().profile.accessToken,
+      },
+      credentials: "include",
+      body: JSON.stringify({ highscoreFish }),
+    };
+    fetch(
+      API_URL(`citizen/${getState().profile.userId}/highscoreFish`),
+      options,
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        dispatch(profile.actions.setHighscoreFish(data.highscoreFish));
+      })
+      .catch();
+  };
 };
 
 // Thunk for updating highscore math
 export const updateHighscoreMath = (highscoreMath) => {
-	return (dispatch, getState) => {
-		const options = {
-			method: 'PATCH',
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: getState().profile.accessToken,
-			},
-			credentials: 'include',
-			body: JSON.stringify({ highscoreMath }),
-		};
-		fetch(
-			API_URL(`citizen/${getState().profile.userId}/highscoreMath`),
-			options
-		)
-			.then((res) => res.json())
-			.then((data) => {
-				dispatch(profile.actions.setHighscoreMath(data.highscoreMath));
-			})
-			.catch();
-	};
+  return (dispatch, getState) => {
+    const options = {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: getState().profile.accessToken,
+      },
+      credentials: "include",
+      body: JSON.stringify({ highscoreMath }),
+    };
+    fetch(
+      API_URL(`citizen/${getState().profile.userId}/highscoreMath`),
+      options,
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        dispatch(profile.actions.setHighscoreMath(data.highscoreMath));
+      })
+      .catch();
+  };
 };

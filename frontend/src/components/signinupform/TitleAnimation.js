@@ -1,6 +1,4 @@
-import React from 'react';
-
-import { AnimationTitle, Letter } from './Styling';
+import { AnimationTitle, Letter } from "./Styling";
 
 export const TitleAnimation = () => {
   return (
@@ -11,11 +9,11 @@ export const TitleAnimation = () => {
       <Letter>i</Letter>
       <Letter>z</Letter>
       <Letter>e</Letter>
-      <Letter>n</Letter> 
+      <Letter>n</Letter>
       <Letter>s</Letter>
       <Letter>h</Letter>
       <Letter>i</Letter>
       <Letter>p</Letter>
-  </AnimationTitle>
-  )
+    </AnimationTitle>
+  );
 };

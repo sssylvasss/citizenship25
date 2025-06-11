@@ -1,9 +1,7 @@
 import React from "react";
 
-import { SendButton } from './Styling';
+import { SendButton } from "./Styling";
 
 export const SubmitButton = () => {
-  return (
-    <SendButton type="submit">submit</SendButton>
-  )
+  return <SendButton type="submit">submit</SendButton>;
 };

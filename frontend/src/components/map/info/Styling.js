@@ -1,12 +1,12 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 import {
-	FaFish,
-	FaUtensils,
-	FaShoppingCart,
-	FaSquareRootAlt,
-	FaTh,
-	FaQuestion
-} from 'react-icons/fa';
+  FaFish,
+  FaUtensils,
+  FaShoppingCart,
+  FaSquareRootAlt,
+  FaTh,
+  FaQuestion,
+} from "react-icons/fa";
 
 // Info
 export const InfoContainer = styled.div`
@@ -20,9 +20,9 @@ export const InfoContainer = styled.div`
   max-width: 300px;
   color: ${(props) => props.theme.textColor};
   @media (min-width: 500px) {
-		max-width: 450px;
-		padding: 10px;
-	}
+    max-width: 450px;
+    padding: 10px;
+  }
 `;
 
 export const ShipInfo = styled.h2`
@@ -37,39 +37,39 @@ export const ShipInfo = styled.h2`
 `;
 
 export const InfoPage = styled.div`
-	padding: 10px 10px 30px 10px;
+  padding: 10px 10px 30px 10px;
   height: fit-content;
 `;
 
 export const PageTitle = styled.h3`
-	font-size: 14px;
-	text-align: left;
+  font-size: 14px;
+  text-align: left;
   text-transform: uppercase;
   margin: 0;
   padding: 2px;
   width: fit-content;
-	@media (min-width: 768px) {
-		font-size: 16px;
-	}
+  @media (min-width: 768px) {
+    font-size: 16px;
+  }
 `;
 
 export const TextInfo = styled.p`
-	font-size: 12px;
-	text-align: left;
+  font-size: 12px;
+  text-align: left;
   margin: 7px 0;
-	@media (min-width: 768px) {
-		font-size: 13px;
-	}
+  @media (min-width: 768px) {
+    font-size: 13px;
+  }
 `;
 
 export const MoveText = styled.p`
-	font-size: 12px;
+  font-size: 12px;
 `;
 
 export const InfoItem = styled.div`
-	display: flex;
+  display: flex;
   flex-direction: column;
-	margin: 6px 0 0 0;
+  margin: 6px 0 0 0;
 `;
 
 export const GameText = styled.p`
@@ -77,16 +77,16 @@ export const GameText = styled.p`
   text-align: left;
   margin: 3px 0 5px 0;
   @media (min-width: 768px) {
-		font-size: 13px;
-	}
+    font-size: 13px;
+  }
 `;
 
 export const Fish = styled(FaFish)`
-	font-size: 20px;
+  font-size: 20px;
 `;
 
 export const Math = styled(FaSquareRootAlt)`
-	font-size: 20px;
+  font-size: 20px;
 `;
 
 export const Trivia = styled(FaQuestion)`
@@ -107,40 +107,40 @@ export const Shop = styled(FaShoppingCart)`
 `;
 
 export const CoinsIcon = styled.img`
-	margin: 0 5px 0 0;
-	width: 20px;
+  margin: 0 5px 0 0;
+  width: 20px;
 `;
 
 export const BottomText = styled.div`
-	margin-top: 12px;
+  margin-top: 12px;
   text-align: left;
 `;
 
 export const EndText = styled.p`
-	font-size: 12px;
-	margin: 5px 0 0 0;
-	@media (min-width: 768px) {
-		font-size: 14px;
-	}
+  font-size: 12px;
+  margin: 5px 0 0 0;
+  @media (min-width: 768px) {
+    font-size: 14px;
+  }
 `;
 
 export const EndTextName = styled(EndText)`
-	font-size: 10px;
-	@media (min-width: 768px) {
-		font-size: 12px;
-	}
+  font-size: 10px;
+  @media (min-width: 768px) {
+    font-size: 12px;
+  }
 `;
 
 export const Email = styled.a`
-	font-size: 10px;
-	text-decoration: underline;
-	color: ${props => props.theme.textColor};
-	cursor: pointer;
-	margin: 0;
-	:hover {
-		color: ${props => props.theme.primary};
-	}
-	@media (min-width: 768px) {
-		font-size: 12px;
-	}
+  font-size: 10px;
+  text-decoration: underline;
+  color: ${(props) => props.theme.textColor};
+  cursor: pointer;
+  margin: 0;
+  :hover {
+    color: ${(props) => props.theme.primary};
+  }
+  @media (min-width: 768px) {
+    font-size: 12px;
+  }
 `;

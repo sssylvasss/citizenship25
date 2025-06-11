@@ -1,21 +1,21 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const MainContainer = styled.main`
-min-height: 100vh;
-width: 100%;
-display: flex;
-justify-content: center;
-position: relative;
-padding-top: 10px;
-color: ${(props) => props.theme.colors.text};
-background-color: ${(props) => props.theme.colors.background};
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  padding-top: 10px;
+  color: ${(props) => props.theme.colors.text};
+  background-color: ${(props) => props.theme.colors.background};
 `;
 
 // Memory Card
 export const Card = styled.div`
-	height: 120px;
-	width: 90px;
-	background-color: ${(props) => props.theme.secondary};
+  height: 120px;
+  width: 90px;
+  background-color: ${(props) => props.theme.secondary};
   margin: 5px;
   cursor: pointer;
   :hover {
@@ -31,7 +31,7 @@ export const Card = styled.div`
 export const ImageCard = styled.img`
   margin: 5px;
   height: 120px;
-	width: 90px;
+  width: 90px;
   @media (min-width: 768px) {
     margin: 10px;
     height: 180px;
@@ -52,9 +52,9 @@ export const GameContainer = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
-  background-color: ${props => props.theme.primary};
-  border: 4px solid ${props => props.theme.secondary};
-  color: ${props => props.theme.textColor};
+  background-color: ${(props) => props.theme.primary};
+  border: 4px solid ${(props) => props.theme.secondary};
+  color: ${(props) => props.theme.textColor};
   padding: 20px 10px;
   @media (min-width: 768px) {
     max-width: 90%;
@@ -66,7 +66,7 @@ export const GameContainer = styled.div`
   @media (min-width: 1400px) {
     max-width: 70%;
   }
-`; 
+`;
 
 export const GameGrid = styled.div`
   display: flex;
@@ -74,4 +74,3 @@ export const GameGrid = styled.div`
   justify-content: center;
   margin-top: 20px;
 `;
-

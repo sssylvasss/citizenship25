@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const MainContainer = styled.div`
   width: 100%;
@@ -40,20 +40,20 @@ export const Status = styled.h3`
   position: absolute;
   font-size: 20px;
   top: 100px;
-	left: 22px;
-	display: flex;
-	flex-direction: column;
+  left: 22px;
+  display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
   width: 200px;
   text-transform: uppercase;
-  @media ( min-width: 768px) {
+  @media (min-width: 768px) {
     top: 80px;
   }
 `;
 
 export const StatusText = styled.p`
-	letter-spacing: 10px;
-	margin: 5px 0 0 0;
+  letter-spacing: 10px;
+  margin: 5px 0 0 0;
 `;
 
 // Word
@@ -84,15 +84,16 @@ export const NotificationsContainer = styled.div`
   padding: 7px;
   border-radius: 5px;
   transition: transform 0.3s ease-in-out;
-  background-color: ${props => props.theme.hover};
-  ${props =>
-    props.visible ?
-    `
+  background-color: ${(props) => props.theme.hover};
+  ${(props) =>
+    props.visible
+      ? `
     display: flex;
-    `:  `
+    `
+      : `
     display: none;
     `};
-  `;
+`;
 
 // Finish Dialog
 export const DialogContainer = styled.div`
@@ -100,12 +101,12 @@ export const DialogContainer = styled.div`
   display: flex;
   width: 100%;
   height: 100%;
-  flex-directioN: column;
+  flex-direction: column;
   align-items: center;
   max-width: 320px;
-  background-color: ${props => props.theme.backgroundColor};
-  color: ${props => props.theme.textColor};
-  border: 2px solid ${props => props.theme.secondary};
+  background-color: ${(props) => props.theme.backgroundColor};
+  color: ${(props) => props.theme.textColor};
+  border: 2px solid ${(props) => props.theme.secondary};
   @media (min-width: 768px) {
     max-width: 400px;
   }
@@ -120,7 +121,7 @@ export const Button = styled.button`
   font-size: 16px;
   width: fit-content;
   text-transform: uppercase;
-  font-family: 'Trispace';
+  font-family: "Trispace";
   cursor: pointer;
   :hover {
     background-color: ${(props) => props.theme.hover};
@@ -128,7 +129,7 @@ export const Button = styled.button`
 `;
 
 export const DialogText = styled.p`
-	font-size: 16px;
+  font-size: 16px;
   margin: 0;
   text-align: center;
 `;

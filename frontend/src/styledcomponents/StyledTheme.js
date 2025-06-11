@@ -6,10 +6,10 @@ export const redTheme = {
     text: "#fff",
     accent: "#e5e5e5",
     error: "#e83715",
-    success: "#6DD704"
-  }
+    success: "#6DD704",
+  },
 };
-    
+
 export const lightTheme = {
   colors: {
     background: "#e3cdc1",
@@ -18,8 +18,8 @@ export const lightTheme = {
     text: "#000",
     accent: "#999b84",
     error: "#e83715",
-    success: "#6DD704"
-  }
+    success: "#6DD704",
+  },
 };
 
 export const blueTheme = {
@@ -30,8 +30,8 @@ export const blueTheme = {
     text: "#fff",
     accent: "#3c415c",
     error: "#e83715",
-    success: "#6DD704"
-  }
+    success: "#6DD704",
+  },
 };
 
 export const grayTheme = {
@@ -42,8 +42,8 @@ export const grayTheme = {
     text: "#fff",
     accent: "#FA7D09",
     error: "#e83715",
-    success: "#6DD704"
-  }
+    success: "#6DD704",
+  },
 };
 
 export const brownTheme = {
@@ -54,6 +54,6 @@ export const brownTheme = {
     text: "#fff",
     accent: "#fcdec0",
     error: "#e83715",
-    success: "#6DD704"
-  }
+    success: "#6DD704",
+  },
 };

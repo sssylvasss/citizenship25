@@ -1,13 +1,13 @@
 import styled from "styled-components";
 
-import dish2 from './dish2.png';
+import dish2 from "./dish2.png";
 
 // CookFood
 export const GameContainer = styled.div`
   width: 100%;
   height: 100vh;
   background-color: #000;
-  color: ${props => props.theme.textColor};
+  color: ${(props) => props.theme.textColor};
   position: fixed;
   display: flex;
   flex-direction: column;
@@ -88,7 +88,7 @@ export const Task = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    
+
     &.gray {
       filter: gray;
       -webkit-filter: grayscale(1);
@@ -112,7 +112,6 @@ export const PlateContainerTitle = styled.h3`
     top: 15px;
   }
 `;
-
 
 // Food Items
 export const Items = styled.div`
@@ -151,12 +150,12 @@ export const DialogContainer = styled.div`
   display: flex;
   width: 100%;
   height: 100%;
-  flex-directioN: column;
+  flex-direction: column;
   align-items: center;
   max-width: 320px;
-  background-color: ${props => props.theme.backgroundColor};
-  color: ${props => props.theme.textColor};
-  border: 2px solid ${props => props.theme.secondary};
+  background-color: ${(props) => props.theme.backgroundColor};
+  color: ${(props) => props.theme.textColor};
+  border: 2px solid ${(props) => props.theme.secondary};
   @media (min-width: 768px) {
     max-width: 400px;
   }
@@ -171,7 +170,7 @@ export const FinishButton = styled.button`
   font-size: 16px;
   width: fit-content;
   text-transform: uppercase;
-  font-family: 'Trispace';
+  font-family: "Trispace";
   cursor: pointer;
   :hover {
     background-color: ${(props) => props.theme.hover};
@@ -179,7 +178,7 @@ export const FinishButton = styled.button`
 `;
 
 export const DialogText = styled.p`
-	font-size: 16px;
+  font-size: 16px;
   margin: 0;
   text-align: center;
 `;

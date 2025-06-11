@@ -1,21 +1,21 @@
-import React from 'react';
-
-import { 
-  ButtonContainer, 
+import {
+  ButtonContainer,
   StartButton,
-  NumberButton, 
+  NumberButton,
   NumberText,
   Up,
   Left,
   Down,
-  Right } from './Styling';
+  Right,
+} from "./Styling";
 
-export const NumberButtons = ({ 
-  start, 
-  clickUp, 
-  clickLeft, 
-  clickRight, 
-  clickDown }) => {
+export const NumberButtons = ({
+  start,
+  clickUp,
+  clickLeft,
+  clickRight,
+  clickDown,
+}) => {
   return (
     <ButtonContainer>
       <StartButton onClick={start}>
@@ -52,6 +52,6 @@ export const NumberButtons = ({
       <NumberButton>
         <NumberText>9</NumberText>
       </NumberButton>
-  </ButtonContainer>
-  )
-}
+    </ButtonContainer>
+  );
+};

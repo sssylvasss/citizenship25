@@ -12,8 +12,8 @@ export const GetImages = async () => {
   // Shuffle cards
   const shuffledDeck = deck.sort(() => 0.5 - Math.random());
   return new Promise((resolve, reject) => {
-    resolve(shuffledDeck)
-  })
+    resolve(shuffledDeck);
+  });
 };
 
 const fetchImages = async (page) => {
@@ -34,10 +34,10 @@ export const getRandomUrls = async () => {
     const i = Math.floor(Math.random() * urlList.length);
 
     if (urlList[i]) {
-      const { id } = urlList[i]
+      const { id } = urlList[i];
 
       if (!imageSet.has(id)) {
-        imageSet.add(id)
+        imageSet.add(id);
         urlArray.push({
           id,
           url: `${BASE_URL}/id/${id}/150/200`,

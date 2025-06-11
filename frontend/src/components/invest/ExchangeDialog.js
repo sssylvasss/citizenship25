@@ -1,34 +1,34 @@
-import React from 'react';
-import Dialog from '@mui/material/Dialog';
+import Dialog from "@mui/material/Dialog";
 
-import { SmallDialog } from '../reusables/SmallDialog';
-import { 
-  DialogContainer, 
-  InvestTitle, 
-  InvestInfo, 
+import { SmallDialog } from "../reusables/SmallDialog";
+import {
+  DialogContainer,
+  InvestTitle,
+  InvestInfo,
   PriceInfo,
   QuestionText,
-  InvestButton, 
-  InputContainer, 
-  InputAmount, 
+  InvestButton,
+  InputContainer,
+  InputAmount,
   Available,
   TotalValueText,
-  CloseIcon } from './Styling';
+  CloseIcon,
+} from "./Styling";
 
-export const ExchangeDialog = ({ 
-  openExchange, 
-  onCloseExchange, 
+export const ExchangeDialog = ({
+  openExchange,
+  onCloseExchange,
   rate,
-  onChange, 
+  onChange,
   totalExchange,
-  onClick, 
+  onClick,
   value,
   open,
   badges,
   onClose,
   confirmText,
-  buttonText }) => {
-
+  buttonText,
+}) => {
   return (
     <>
       <Dialog open={openExchange} onClose={onCloseExchange}>
@@ -38,16 +38,18 @@ export const ExchangeDialog = ({
             <CloseIcon onClick={onCloseExchange} />
           </InvestTitle>
           <InvestInfo>
-            Here you can exchange badges for coins! It's important to have some money since you need it to invest, buy things in the store etc.
+            Here you can exchange badges for coins! It's important to have some
+            money since you need it to invest, buy things in the store etc.
           </InvestInfo>
           <PriceInfo>Exchange rate: 5 badges = {rate} $</PriceInfo>
           <QuestionText>How many badges do you want to exchange?</QuestionText>
           <InputContainer>
-            <InputAmount 
-              type='text' 
-              placeholder='Enter quantity' 
-              onChange={onChange} 
-              value={value}></InputAmount>
+            <InputAmount
+              type="text"
+              placeholder="Enter quantity"
+              onChange={onChange}
+              value={value}
+            ></InputAmount>
             <TotalValueText> = {totalExchange} $</TotalValueText>
           </InputContainer>
           <Available>Your available badges: {badges} </Available>
@@ -56,11 +58,12 @@ export const ExchangeDialog = ({
         <SmallDialog
           open={open}
           onClose={onClose}
-          headerText='Citizen Exchange'
+          headerText="Citizen Exchange"
           text={confirmText}
           onClick={onClose}
-          confirmButton={buttonText} />
+          confirmButton={buttonText}
+        />
       </Dialog>
     </>
-  )
+  );
 };

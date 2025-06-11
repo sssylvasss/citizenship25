@@ -1,10 +1,4 @@
-import React from 'react';
-
-import { 
-  StartContainer, 
-  Text, 
-  ButtonContainer, 
-  Button } from './Styling';
+import { StartContainer, Text, ButtonContainer, Button } from "./Styling";
 
 export const StartGame = ({ easy, medium, hard }) => {
   return (
@@ -16,5 +10,5 @@ export const StartGame = ({ easy, medium, hard }) => {
         <Button onClick={hard}>Expert</Button>
       </ButtonContainer>
     </StartContainer>
-  )
+  );
 };

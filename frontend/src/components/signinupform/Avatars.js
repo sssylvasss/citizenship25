@@ -1,26 +1,20 @@
-import React from 'react';
-
-import { 
-  ButtonContainer, 
-  AvatarLabel, 
-  Radio,
-  Avatar } from './Styling';
+import { ButtonContainer, AvatarLabel, Radio, Avatar } from "./Styling";
 
 export const Avatars = ({ avatar, onChange, checked, image }) => {
-
   return (
     <ButtonContainer>
       <AvatarLabel htmlFor={avatar} aria-label={avatar}>
-        <Radio 
-          type="radio" 
+        <Radio
+          type="radio"
           name="avatar"
-          id={avatar} 
-          value={avatar} 
-          onChange={onChange} 
+          id={avatar}
+          value={avatar}
+          onChange={onChange}
           checked={checked}
-          required />
+          required
+        />
         <Avatar src={image} />
       </AvatarLabel>
     </ButtonContainer>
-  )
+  );
 };

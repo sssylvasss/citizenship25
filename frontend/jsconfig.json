@@ -1,7 +1,14 @@
 {
   "compilerOptions": {
-    "module": "es6",
-    "jsx": "react",
-    "target": "es6"
-  }
+    "baseUrl": "src",
+    "jsx": "react-jsx",
+    "checkJs": false,
+    "module": "commonjs",
+    "target": "es2021",
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "build"]
 }

@@ -1,18 +1,16 @@
-import React from 'react';
-
-import { 
-  ImageNameContainer, 
-  ProfileAvatar, 
-  StatusContainer, 
-  Username, 
+import {
+  ImageNameContainer,
+  ProfileAvatar,
+  StatusContainer,
+  Username,
   BadgesText,
   CoinsText,
   BadgeIcon,
-  CoinsIcon } from './Styling';
-  import { RankingProgress } from './RankingProgress';
+  CoinsIcon,
+} from "./Styling";
+import { RankingProgress } from "./RankingProgress";
 
 export const ProfileStats = ({ avatar, username, badges, coins, ranking }) => {
-
   return (
     <ImageNameContainer>
       <ProfileAvatar src={avatar} />
@@ -20,14 +18,14 @@ export const ProfileStats = ({ avatar, username, badges, coins, ranking }) => {
       <RankingProgress ranking={ranking} />
       <StatusContainer>
         <BadgesText>
-          <BadgeIcon src={require(`../../assets/badge.png`)} /> 
+          <BadgeIcon src={require(`../../assets/badge.png`)} />
           {badges}
         </BadgesText>
         <CoinsText>
           {coins}
-          <CoinsIcon src={require(`../../assets/money2.png`)} /> 
+          <CoinsIcon src={require(`../../assets/money2.png`)} />
         </CoinsText>
       </StatusContainer>
     </ImageNameContainer>
-  )
+  );
 };

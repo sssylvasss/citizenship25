@@ -1,6 +1,6 @@
 import React from "react";
 
-import { FigureContainer } from './Styling';
+import { FigureContainer } from "./Styling";
 
 export const Figure = ({ wrongLetters }) => {
   const errors = wrongLetters.length;

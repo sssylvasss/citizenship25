@@ -1,11 +1,11 @@
-import styled from 'styled-components';
-import { FaArrowUp, FaArrowDown, FaTimes } from 'react-icons/fa';
+import styled from "styled-components";
+import { FaArrowUp, FaArrowDown, FaTimes } from "react-icons/fa";
 
-// Card 
+// Card
 export const Container = styled.div`
   padding: 10px 20px;
-  background: ${props => props.theme.colors.background};
-  color: ${props => props.theme.colors.text};
+  background: ${(props) => props.theme.colors.background};
+  color: ${(props) => props.theme.colors.text};
   position: relative;
   display: flex;
   height: 115px;
@@ -22,10 +22,10 @@ export const Title = styled.h1`
   font-size: 15px;
   padding: 0;
   text-transform: uppercase;
-  color: ${props => props.theme.textColor};	
+  color: ${(props) => props.theme.textColor};
   @media (min-width: 768px) {
-		font-size: 18px;
-	}
+    font-size: 18px;
+  }
 `;
 
 export const ChangeContainer = styled.div`
@@ -47,11 +47,12 @@ export const ChangeText = styled.p`
 export const CoinChange = styled.span`
   display: flex;
   align-items: center;
-  ${props =>
-  props['data-negative'] === "true" ?
-  `
+  ${(props) =>
+    props["data-negative"] === "true"
+      ? `
   color: #e83715;
-  `:  `
+  `
+      : `
   color: #6DD704;
   `};
 `;
@@ -67,10 +68,10 @@ export const IconDown = styled(FaArrowDown)`
 `;
 
 export const SeeMoreButton = styled.button`
-  background-color: ${props => props.theme.primary};
-  color: ${props => props.theme.textColor};
+  background-color: ${(props) => props.theme.primary};
+  color: ${(props) => props.theme.textColor};
   padding: 7px;
-  border: ${props => props.theme.secondary};
+  border: ${(props) => props.theme.secondary};
   position: absolute;
   right: 0;
   bottom: 0;
@@ -78,30 +79,30 @@ export const SeeMoreButton = styled.button`
   font-size: 12px;
   font-family: "Trispace", serif;
   :hover {
-    background-color: ${props => props.theme.secondary};
+    background-color: ${(props) => props.theme.secondary};
   }
   @media (min-width: 768px) {
     padding: 10px;
     font-size: 14px;
   }
-`; 
+`;
 
 // Invest & Exchange Dialogs
 export const DialogContainer = styled.div`
-  background-color: ${props => props.theme.colors.background};
-  border: 2px solid ${props => props.theme.colors.primary};
+  background-color: ${(props) => props.theme.colors.background};
+  border: 2px solid ${(props) => props.theme.colors.primary};
   display: flex;
   flex-direction: column;
   padding: 15px;
   min-width: 300px;
-  color: ${props => props.theme.colors.text};
+  color: ${(props) => props.theme.colors.text};
   @media (min-width: 768px) {
     padding: 20px;
   }
 `;
 
 export const InvestTitle = styled.h3`
-  border-bottom: 2px solid ${props => props.theme.secondary};
+  border-bottom: 2px solid ${(props) => props.theme.secondary};
   padding: 0 0 5px 0;
   margin: 0 0 5px 0;
   display: flex;
@@ -137,16 +138,16 @@ export const InputContainer = styled.div`
 
 export const InputAmount = styled.input`
   padding: 5px;
-  border: 2px solid ${props => props.theme.secondary};
-  color: ${props => props.theme.textColor};
+  border: 2px solid ${(props) => props.theme.secondary};
+  color: ${(props) => props.theme.textColor};
   font-size: 13px;
   outline: none;
-  background-color: ${props => props.theme.primary};
+  background-color: ${(props) => props.theme.primary};
   margin-right: 15px;
   max-width: 55%;
-  font-family: 'Trispace', serif;
+  font-family: "Trispace", serif;
   :focus {
-    background-color: ${props => props.theme.secondary};
+    background-color: ${(props) => props.theme.secondary};
   }
   @media (min-width: 768px) {
     width: 153px;
@@ -202,16 +203,16 @@ export const ExchangeButton = styled.button`
   width: fit-content;
   text-transform: uppercase;
   font-family: "Trispace", serif;
-  color: ${props => props.theme.textColor};
-  background-color: ${props => props.theme.primary};
-  border: 2px solid ${props => props.theme.secondary};
-  :hover, :focus {
-    background-color: ${props => props.theme.secondary};
+  color: ${(props) => props.theme.textColor};
+  background-color: ${(props) => props.theme.primary};
+  border: 2px solid ${(props) => props.theme.secondary};
+  :hover,
+  :focus {
+    background-color: ${(props) => props.theme.secondary};
   }
 `;
 
-export const InvestmentButton = styled(ExchangeButton)`
-`;
+export const InvestmentButton = styled(ExchangeButton)``;
 
 export const PercentChange = styled(CoinChange)`
   margin-left: 8px;
@@ -224,12 +225,12 @@ export const InvestButton = styled(ExchangeButton)`
 
 // Close Dialog
 export const CloseIcon = styled(FaTimes)`
-	font-size: 20px;
-	cursor: pointer;
+  font-size: 20px;
+  cursor: pointer;
   position: absolute;
   right: 10px;
   top: 10px;
-	:hover {
-		transform: scale(1.2);
-	}
+  :hover {
+    transform: scale(1.2);
+  }
 `;

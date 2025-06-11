@@ -1,9 +1,8 @@
-import React from 'react'
+import React from "react";
 
-import { MainBar, RollingText } from './Styling'
-import { Weather } from './Weather';
-import { Housing } from './Housing';
-
+import { MainBar, RollingText } from "./Styling";
+import { Weather } from "./Weather";
+import { Housing } from "./Housing";
 
 export const RollingInfoBar = () => {
   return (
@@ -13,5 +12,5 @@ export const RollingInfoBar = () => {
         <Housing />
       </RollingText>
     </MainBar>
-  )
+  );
 };

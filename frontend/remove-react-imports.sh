@@ -1,0 +1,56 @@
+#!/bin/bash
+
+files=(
+  "src/App.js"
+  "src/components/store/cart/ConfirmationDialogs.js"
+  "src/components/store/cart/CartItem.js"
+  "src/components/store/products/AllProducts.js"
+  "src/components/invest/InvestDialog.js"
+  "src/components/invest/ExchangeDialog.js"
+  "src/components/signinupform/TitleAnimation.js"
+  "src/components/header/Hidden.js"
+  "src/components/signinupform/Avatars.js"
+  "src/components/signinupform/SubmitButton.js"
+  "src/components/signinupform/ChangeLogIn.js"
+  "src/components/signinupform/PasswordStrength.js"
+  "src/components/loader/Loader.js"
+  "src/components/signinupform/TextInput.js"
+  "src/components/reusables/GameScore.js"
+  "src/components/floor-two/snake/Layout.js"
+  "src/components/theme/ThemeButtons.js"
+  "src/components/floor-two/snake/Snake.js"
+  "src/components/profile/Buttons.js"
+  "src/components/profile/RankingProgress.js"
+  "src/components/floor-two/snake/NumberButtons.js"
+  "src/components/profile/ItemsProfile.js"
+  "src/components/profile/ProfileStats.js"
+  "src/components/floor-two/chefstable/FinishDialog.js"
+  "src/components/floor-two/chefstable/FoodItems.js"
+  "src/components/floor-two/chefstable/Plates.js"
+  "src/components/profile/settings/Settings.js"
+  "src/components/map/Map.js"
+  "src/components/map/info/FourthInfo.js"
+  "src/components/map/info/ThirdInfo.js"
+  "src/components/map/info/FirstInfo.js"
+  "src/components/map/Store.js"
+  "src/components/reusables/GameTitle.js"
+  "src/components/map/info/SecondInfo.js"
+  "src/components/quiz/Animation.js"
+  "src/components/reusables/GameFinish.js"
+  "src/components/map/restaurant/Dialogs.js"
+  "src/components/classroom/NumberInput.js"
+  "src/components/leaderboard/citizenprofile/CitizenStats.js"
+  "src/components/leaderboard/citizenprofile/CitizenInvestments.js"
+  "src/components/leaderboard/citizenprofile/CitizenItems.js"
+  "src/components/quiz/Start.js"
+  "src/components/classroom/StartGame.js"
+  "src/components/leaderboard/citizenprofile/InvestCard.js"
+  "src/components/messageboard/MessageForm.js"
+)
+
+for file in "${files[@]}"; do
+  if [ -f "$file" ]; then
+    # Remove the React import line and any empty lines that follow
+    sed -i '' '/import React from '\''react'\'';/d' "$file"
+  fi
+done 

@@ -1,10 +1,6 @@
-import React from 'react';
-import { FaSignOutAlt, FaCog } from 'react-icons/fa';
+import { FaSignOutAlt, FaCog } from "react-icons/fa";
 
-import { 
-  ButtonContainer, 
-  ButtonSignOut, 
-  ButtonSettings } from './Styling';
+import { ButtonContainer, ButtonSignOut, ButtonSettings } from "./Styling";
 
 export const Buttons = ({ onSettings, onClick }) => {
   return (
@@ -13,8 +9,8 @@ export const Buttons = ({ onSettings, onClick }) => {
         <FaCog />
       </ButtonSettings>
       <ButtonSignOut onClick={onClick}>
-       <FaSignOutAlt />
+        <FaSignOutAlt />
       </ButtonSignOut>
     </ButtonContainer>
-  )
+  );
 };

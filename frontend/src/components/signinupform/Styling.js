@@ -1,5 +1,5 @@
-import styled, { keyframes } from 'styled-components';
-import { Link } from 'react-router-dom';
+import styled, { keyframes } from "styled-components";
+import { Link } from "react-router-dom";
 
 // For Sign in and up pages
 export const Container = styled.div`
@@ -9,7 +9,7 @@ export const Container = styled.div`
   justify-content: center;
   min-height: 100vh;
   width: 100%;
-  background-color: ${props => props.theme.colors.background};
+  background-color: ${(props) => props.theme.colors.background};
 `;
 
 export const Form = styled.form`
@@ -23,7 +23,7 @@ export const Form = styled.form`
 `;
 
 export const Title = styled.h1`
-  color: ${props => props.theme.colors.text};
+  color: ${(props) => props.theme.colors.text};
   text-transform: uppercase;
   font-size: 24px;
   margin: 0;
@@ -36,15 +36,15 @@ export const Label = styled.label`
   display: flex;
   align-items: center;
   border-radius: 50%;
-  background-color: ${props => props.theme.secondary};
+  background-color: ${(props) => props.theme.secondary};
   border: 2px solid transparent;
   width: 100%;
   height: 100%;
   position: relative;
   margin-right: 10px;
-  z-index: 1; 
+  z-index: 1;
   :hover {
-    border: 2px solid ${props => props.theme.hover};
+    border: 2px solid ${(props) => props.theme.hover};
   }
 `;
 
@@ -63,15 +63,15 @@ export const Input = styled.input`
   padding: 7px;
   margin: 0;
   width: 100%;
-  border-bottom: 3px solid ${props => props.theme.colors.primary};
+  border-bottom: 3px solid ${(props) => props.theme.colors.primary};
   border-top: none;
   border-right: none;
   border-left: none;
-  color: ${props => props.theme.colors.text};
+  color: ${(props) => props.theme.colors.text};
   outline: none;
   font-size: 14px;
-  font-family: 'Trispace', serif;
-  background-color: ${props => props.theme.colors.primary};
+  font-family: "Trispace", serif;
+  background-color: ${(props) => props.theme.colors.primary};
   @media (min-width: 768px) {
     font-size: 16px;
   }
@@ -81,12 +81,12 @@ export const Button = styled.button`
   padding: 10px;
   margin: 20px 0;
   width: 250px;
-  background-color: ${props => props.theme.colors.secondary};
-  color: ${props => props.theme.colors.text};
+  background-color: ${(props) => props.theme.colors.secondary};
+  color: ${(props) => props.theme.colors.text};
   font-size: 14px;
   text-transform: uppercase;
-  font-family: 'Trispace', serif;
-  border: 2px solid ${props => props.theme.colors.accent};
+  font-family: "Trispace", serif;
+  border: 2px solid ${(props) => props.theme.colors.accent};
   :hover {
     opacity: 0.8;
   }
@@ -111,13 +111,13 @@ export const TextButton = styled.button`
   padding: 0;
   margin: 0 0 0 5px;
   font-size: 14px;
-  font-family: 'Trispace', serif;
-  color: ${props => props.theme.colors.secondary};
+  font-family: "Trispace", serif;
+  color: ${(props) => props.theme.colors.secondary};
   :hover {
-    color: ${props => props.theme.colors.primary};
+    color: ${(props) => props.theme.colors.primary};
   }
   :focus {
-    color: ${props => props.theme.colors.accent};
+    color: ${(props) => props.theme.colors.accent};
   }
   @media (min-width: 768px) {
     font-size: 16px;
@@ -125,7 +125,7 @@ export const TextButton = styled.button`
 `;
 
 export const ErrorMessage = styled.p`
-  color: ${props => props.theme.colors.text};
+  color: ${(props) => props.theme.colors.text};
   font-size: 14px;
   margin: 0;
   padding: 0;
@@ -135,12 +135,12 @@ export const ErrorMessage = styled.p`
 `;
 
 export const ErrorText = styled.p`
-  color: ${props => props.theme.colors.text};
+  color: ${(props) => props.theme.colors.text};
   font-size: 14px;
   margin: 0;
   padding: 0;
   :hover {
-    color: ${props => props.theme.colors.secondary};
+    color: ${(props) => props.theme.colors.secondary};
   }
   @media (min-width: 768px) {
     font-size: 16px;
@@ -174,7 +174,7 @@ export const AvatarWrapper = styled.div`
 `;
 
 export const AvatarButton = styled.button`
-  background-color: ${props => props.theme.colors.secondary};
+  background-color: ${(props) => props.theme.colors.secondary};
   border: none;
   padding: 5px;
   margin: 5px;
@@ -186,7 +186,7 @@ export const AvatarButton = styled.button`
 
 export const AvatarImage = styled.img`
   height: 50px;
-  border: 2px solid ${props => props.theme.colors.accent};
+  border: 2px solid ${(props) => props.theme.colors.accent};
   padding: 2px;
 `;
 
@@ -200,7 +200,7 @@ export const SelectedAvatar = styled.div`
 
 export const SelectedImage = styled.img`
   height: 70px;
-  border: 2px solid ${props => props.theme.colors.secondary};
+  border: 2px solid ${(props) => props.theme.colors.secondary};
   padding: 5px;
 `;
 
@@ -221,7 +221,7 @@ export const DialogContainer = styled.div`
   justify-content: center;
   padding: 20px;
   max-width: 300px;
-  border: 2px solid ${props => props.theme.colors.accent};
+  border: 2px solid ${(props) => props.theme.colors.accent};
 `;
 
 export const DialogText = styled.p`
@@ -233,9 +233,9 @@ export const DialogButton = styled.button`
   padding: 8px;
   margin: 10px 5px;
   background-color: transparent;
-  border: 2px solid ${props => props.theme.colors.accent};
+  border: 2px solid ${(props) => props.theme.colors.accent};
   font-size: 14px;
-  font-family: 'Trispace', serif;
+  font-family: "Trispace", serif;
   text-transform: uppercase;
   :hover {
     opacity: 0.8;
@@ -251,7 +251,7 @@ const input = keyframes`
 `;
 
 export const InputSignIn = styled(Input)`
-	animation: ${input} 3.5s linear;
+  animation: ${input} 3.5s linear;
 `;
 
 // SubmitButton for Sign In
@@ -261,7 +261,7 @@ export const ButtonSignIn = styled(Button)`
 
 // ChooseText
 export const ChooseText = styled.p`
-  color: ${props => props.theme.colors.text};
+  color: ${(props) => props.theme.colors.text};
   text-transform: uppercase;
   font-size: 14px;
   margin: 15px 0 5px 0;
@@ -275,7 +275,7 @@ export const ChooseText = styled.p`
 
 // ChangeLogin for Sign Up
 export const ChangeText = styled.p`
-  color: ${props => props.theme.colors.text};
+  color: ${(props) => props.theme.colors.text};
   text-transform: uppercase;
   font-size: 14px;
   margin-bottom: 25px;
@@ -287,11 +287,12 @@ export const ChangeText = styled.p`
 
 export const ChangeLink = styled(Link)`
   text-decoration: underline;
-  color: ${props => props.theme.colors.text};
+  color: ${(props) => props.theme.colors.text};
   cursor: pointer;
   margin-left: 7px;
-  :hover, :focus {
-    color: ${props => props.theme.colors.secondary};
+  :hover,
+  :focus {
+    color: ${(props) => props.theme.colors.secondary};
   }
 `;
 
@@ -332,42 +333,42 @@ export const Letter = styled.p`
   margin: 0;
   padding: 0;
   display: inline-block;
-	&:nth-of-type(8) {
-		margin-left: 15px;
-	}
-	&:nth-of-type(1) {
-		animation: ${letterTop} 2.1s linear;
-	}
-	&:nth-of-type(2) {
-		animation: ${letterRight} 2.1s linear;
-	}
-	&:nth-of-type(3) {
-		animation: ${letterLeft} 2.1s linear;
-	}
-	&:nth-of-type(4) {
-		animation: ${letterBottom} 2.1s linear;
-	}
-	&:nth-of-type(5) {
-		animation: ${letterTop} 2.3s linear;
-	}
-	&:nth-of-type(6) {
-		animation: ${letterRight} 2.3s linear;
-	}
-	&:nth-of-type(7) {
-		animation: ${letterLeft} 2.5s linear;
-	}
-	&:nth-of-type(8) {
-		animation: ${letterBottom} 2.5s linear;
-	}
-	&:nth-of-type(9) {
-		animation: ${letterTop} 2.5s linear;
-	}
-	&:nth-of-type(10) {
-		animation: ${letterRight} 2.5s linear;
-	}
-	&:nth-of-type(11) {
-		animation: ${letterBottom} 2.5s linear;
-	}
+  &:nth-of-type(8) {
+    margin-left: 15px;
+  }
+  &:nth-of-type(1) {
+    animation: ${letterTop} 2.1s linear;
+  }
+  &:nth-of-type(2) {
+    animation: ${letterRight} 2.1s linear;
+  }
+  &:nth-of-type(3) {
+    animation: ${letterLeft} 2.1s linear;
+  }
+  &:nth-of-type(4) {
+    animation: ${letterBottom} 2.1s linear;
+  }
+  &:nth-of-type(5) {
+    animation: ${letterTop} 2.3s linear;
+  }
+  &:nth-of-type(6) {
+    animation: ${letterRight} 2.3s linear;
+  }
+  &:nth-of-type(7) {
+    animation: ${letterLeft} 2.5s linear;
+  }
+  &:nth-of-type(8) {
+    animation: ${letterBottom} 2.5s linear;
+  }
+  &:nth-of-type(9) {
+    animation: ${letterTop} 2.5s linear;
+  }
+  &:nth-of-type(10) {
+    animation: ${letterRight} 2.5s linear;
+  }
+  &:nth-of-type(11) {
+    animation: ${letterBottom} 2.5s linear;
+  }
 `;
 
 // Avatars
@@ -384,7 +385,7 @@ export const AvatarLabel = styled.label`
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background-color: ${props => props.theme.colors.background};
+  background-color: ${(props) => props.theme.colors.background};
   border: 2px solid transparent;
   width: fit-content;
   height: fit-content;
@@ -396,7 +397,7 @@ export const AvatarLabel = styled.label`
   @media (min-width: 768px) {
     &:hover {
       transform: scale(1.1);
-      border: 2px solid ${props => props.theme.colors.secondary};
+      border: 2px solid ${(props) => props.theme.colors.secondary};
     }
   }
 `;
@@ -408,15 +409,15 @@ export const Avatar = styled.img`
   border-radius: 50%;
   cursor: pointer;
   outline: none;
-  border: 3px solid ${props => props.theme.colors.primary};
+  border: 3px solid ${(props) => props.theme.colors.primary};
   transition: all 0.2s ease-in-out;
-  background-color: ${props => props.theme.colors.background};
+  background-color: ${(props) => props.theme.colors.background};
 
   @media (max-width: 320px) {
     width: 40px;
     height: 40px;
   }
-  
+
   @media (min-width: 768px) {
     width: 60px;
     height: 60px;
@@ -435,15 +436,15 @@ export const Radio = styled.input`
   padding: 0;
   margin: 0;
   outline: none;
-  
+
   &:checked ~ ${Avatar} {
-    border: 3px solid ${props => props.theme.colors.accent};
+    border: 3px solid ${(props) => props.theme.colors.accent};
     transform: scale(1.1);
-    box-shadow: 0 0 10px ${props => props.theme.colors.accent}40;
+    box-shadow: 0 0 10px ${(props) => props.theme.colors.accent}40;
   }
 
   &:focus-visible ~ ${Avatar} {
-    box-shadow: 0 0 0 2px ${props => props.theme.colors.accent};
+    box-shadow: 0 0 0 2px ${(props) => props.theme.colors.accent};
   }
 `;
 
@@ -454,8 +455,8 @@ export const MainContainer = styled.div`
   justify-content: center;
   min-height: 100vh;
   width: 100%;
-  background-color: ${props => props.theme.colors.background};
-  color: ${props => props.theme.colors.text};
+  background-color: ${(props) => props.theme.colors.background};
+  color: ${(props) => props.theme.colors.text};
 `;
 
 export const EyeButton = styled.button`
@@ -465,17 +466,19 @@ export const EyeButton = styled.button`
   transform: translateY(-50%);
   background: none;
   border: none;
-  color: ${props => props.theme.colors.text};
+  color: ${(props) => props.theme.colors.text};
   font-size: 16px;
   cursor: pointer;
-  opacity: ${props => props.visible ? '1' : '0'};
-  visibility: ${props => props.visible ? 'visible' : 'hidden'};
-  transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+  opacity: ${(props) => (props.visible ? "1" : "0")};
+  visibility: ${(props) => (props.visible ? "visible" : "hidden")};
+  transition:
+    opacity 0.2s ease-in-out,
+    visibility 0.2s ease-in-out;
   :hover {
-    color: ${props => props.theme.colors.secondary};
+    color: ${(props) => props.theme.colors.secondary};
   }
   :focus {
-    color: ${props => props.theme.colors.accent};
+    color: ${(props) => props.theme.colors.accent};
   }
 `;
 

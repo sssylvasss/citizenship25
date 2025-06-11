@@ -1,14 +1,9 @@
-import React from 'react';
-
-import { RoomStore, ShoppingIcon } from './Styling';
+import { RoomStore, ShoppingIcon } from "./Styling";
 
 export const Store = () => {
   return (
-    <RoomStore 
-      tabIndex='0' 
-      aria-label='Store' 
-      to='/store'>
+    <RoomStore tabIndex="0" aria-label="Store" to="/store">
       <ShoppingIcon />
     </RoomStore>
-  )
+  );
 };

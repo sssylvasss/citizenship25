@@ -1,15 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-import audio from '../../assets/BUG-ZAPPER-ELECTRONIC_6EXT8-10522.wav';
-import { Hidden } from './Hidden';
-import { 
-  CameraContainer, 
-  Circle, 
-  InnerCircle } from './Styling';
+import audio from "../../assets/BUG-ZAPPER-ELECTRONIC_6EXT8-10522.wav";
+import { Hidden } from "./Hidden";
+import { CameraContainer, Circle, InnerCircle } from "./Styling";
 
 export const Camera = () => {
   const [background, setBackground] = useState(false);
-  
+
   const getBackground = () => {
     new Audio(audio).play();
     setBackground(true);
@@ -25,5 +22,5 @@ export const Camera = () => {
       </Circle>
       {background && <Hidden />}
     </CameraContainer>
-  )
+  );
 };

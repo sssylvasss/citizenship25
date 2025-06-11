@@ -1,10 +1,4 @@
-import React from 'react';
-
-import { 
-  TriviaContainer, 
-  Text, 
-  ButtonContainer, 
-  Button } from './Styling';
+import { TriviaContainer, Text, ButtonContainer, Button } from "./Styling";
 
 export const Start = ({ easy, hard }) => {
   return (
@@ -15,5 +9,5 @@ export const Start = ({ easy, hard }) => {
         <Button onClick={hard}>Hard</Button>
       </ButtonContainer>
     </TriviaContainer>
-  )
+  );
 };

@@ -1,25 +1,26 @@
-import React from 'react';
-import Dialog from '@mui/material/Dialog';
+import Dialog from "@mui/material/Dialog";
 
-import { 
-  DialogContainer, 
+import {
+  DialogContainer,
   DialogHeader,
   HeaderText,
   Text,
-  ButtonBox, 
-  SellButton, 
+  ButtonBox,
+  SellButton,
   CloseIcon,
-  ConfirmedButton } from './Styling';
+  ConfirmedButton,
+} from "./Styling";
 
-export const SmallDialog = ({ 
+export const SmallDialog = ({
   open,
-  headerText, 
-  onClose, 
-  text, 
-  buttonBox, 
+  headerText,
+  onClose,
+  text,
+  buttonBox,
   sellButton,
   confirmButton,
-  onClick }) => {
+  onClick,
+}) => {
   return (
     <Dialog open={open} onClose={onClose}>
       <DialogContainer>
@@ -28,9 +29,15 @@ export const SmallDialog = ({
           <CloseIcon onClick={onClose} />
         </DialogHeader>
         <Text>{text}</Text>
-        {buttonBox && <ButtonBox><SellButton>{sellButton}</SellButton></ButtonBox>}
-        {confirmButton && <ConfirmedButton onClick={onClick}>{confirmButton}</ConfirmedButton>}
+        {buttonBox && (
+          <ButtonBox>
+            <SellButton>{sellButton}</SellButton>
+          </ButtonBox>
+        )}
+        {confirmButton && (
+          <ConfirmedButton onClick={onClick}>{confirmButton}</ConfirmedButton>
+        )}
       </DialogContainer>
     </Dialog>
-  )
+  );
 };

@@ -6,6 +6,6 @@ export const generateProblem = (num) => {
   return {
     numberOne: generateNumber(num),
     numberTwo: generateNumber(num),
-    operator: ['+', '-', 'x'][generateNumber(2)],
+    operator: ["+", "-", "x"][generateNumber(2)],
   };
 };

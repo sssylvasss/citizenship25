@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Letter, Words } from './Styling';
+import { Letter, Words } from "./Styling";
 
 export const Word = ({ selectedWord, correctLetters }) => {
   return (

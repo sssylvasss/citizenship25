@@ -1,29 +1,34 @@
-import React from 'react';
-import Dialog from '@mui/material/Dialog';
+import Dialog from "@mui/material/Dialog";
 
-import { 
-  FinishContainer,
-  FinishText,
-  FinishButton } from './Styling';
+import { FinishContainer, FinishText, FinishButton } from "./Styling";
 
-export const GameFinish = ({ 
+export const GameFinish = ({
   open,
-  topText, 
+  topText,
   score,
-  textTwo, 
-  points, 
-  textThree, 
+  textTwo,
+  points,
+  textThree,
   bottomText,
   bottomType,
   onClick,
-  button }) => {
-    return (
-      <Dialog open={open}>
-        <FinishContainer>
-          {topText && <FinishText>{topText} {score} {textTwo} {points} {textThree}</FinishText>}
-          {bottomText && <FinishText>{bottomText} {bottomType}</FinishText>}
-          {button && <FinishButton onClick={onClick}>{button}</FinishButton>}
-        </FinishContainer>
-      </Dialog>
-    )
+  button,
+}) => {
+  return (
+    <Dialog open={open}>
+      <FinishContainer>
+        {topText && (
+          <FinishText>
+            {topText} {score} {textTwo} {points} {textThree}
+          </FinishText>
+        )}
+        {bottomText && (
+          <FinishText>
+            {bottomText} {bottomType}
+          </FinishText>
+        )}
+        {button && <FinishButton onClick={onClick}>{button}</FinishButton>}
+      </FinishContainer>
+    </Dialog>
+  );
 };
