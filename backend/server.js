@@ -178,12 +178,15 @@ app.use(cors({
 	origin: [
 		'http://localhost:3000',
 		'http://localhost:3001',
-		'https://citizen-ship.netlify.app',
-		process.env.FRONTEND_URL // Add your Netlify URL here when you have it
-	],
-	methods: ['GET', 'POST', 'PATCH', 'DELETE'],
+		'https://citizenship25.netlify.app',
+		'https://citisenship25.netlify.app',    // Include both possible spellings
+		process.env.FRONTEND_URL
+	].filter(Boolean), // Remove any undefined/null values
+	methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],  // Added OPTIONS for preflight
 	allowedHeaders: ['Content-Type', 'Authorization'],
-	credentials: true
+	credentials: true,
+	preflightContinue: false,
+	optionsSuccessStatus: 204
 }));
 app.use(express.json());
 
