@@ -4,7 +4,7 @@ const isDevelopment = process.env.NODE_ENV === "development";
 // API URL configuration
 const BASE_URL = isDevelopment
   ? "http://localhost:8080"
-  : process.env.REACT_APP_API_URL || "https://citizenship25.onrender.com";
+  : process.env.REACT_APP_API_URL || "https://citizenship-wm42.onrender.com";
 
 // eslint-disable-next-line no-console
 console.log("Frontend configured with:", {

@@ -51,7 +51,7 @@ const defaultOrigins = [
 	'http://localhost:3000',
 	'http://localhost:3001',
 	'https://citizenship25.netlify.app',
-	'https://citizenship25.onrender.com'
+	'https://citizenship-wm42.onrender.com'
 ];
 
 const allowedOrigins = process.env.ALLOWED_ORIGINS 
