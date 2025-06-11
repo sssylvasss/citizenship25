@@ -1,3 +1,4 @@
+/* eslint-disable indent, new-cap */
 import { createSlice } from "@reduxjs/toolkit";
 import { API_URL } from "../utils/utils";
 
@@ -136,10 +137,7 @@ export const updateAvatar = (avatar) => {
       credentials: "include",
       body: JSON.stringify({ avatar }),
     };
-    fetch(
-      `https://citizen-ship.herokuapp.com/citizen/${getState().profile.userId}/avatar`,
-      options,
-    )
+    fetch(API_URL(`citizen/${getState().profile.userId}/avatar`), options)
       .then((res) => res.json())
       .then((data) => {
         dispatch(profile.actions.setAvatar(data.avatar));
@@ -172,7 +170,6 @@ export const updateBadges = (badges) => {
       })
       .catch((error) => {
         console.error("Failed to update badges:", error);
-        // You might want to dispatch an error action here
       });
   };
 };

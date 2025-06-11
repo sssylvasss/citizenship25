@@ -6,6 +6,7 @@ const BASE_URL = isDevelopment
   ? "http://localhost:8080"
   : process.env.REACT_APP_API_URL || "https://citisenship25.onrender.com";
 
+// eslint-disable-next-line no-console
 console.log("Frontend configured with:", {
   environment: isDevelopment ? "development" : "production",
   apiUrl: BASE_URL,

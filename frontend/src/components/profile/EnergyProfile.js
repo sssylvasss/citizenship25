@@ -51,16 +51,14 @@ export const EnergyProfile = ({ openEnergy, toggleEnergy }) => {
         open={open}
         headerText="Citizen Energy"
         onClose={onToggleDialog}
-        text="Your energy intake is running dangerously low! You need to eat something or
-				your ranking will go down with 1."
+        text="Your energy intake is running dangerously low! You need to eat something or your ranking will go down with 1."
       />
       <EnergyText>Needed average: 2000 kcal</EnergyText>
       <SmallDialog
         open={openEnergy}
         headerText="Citizen Energy"
         onClose={toggleEnergy}
-        text="To be a strong citizen your average intake should be minimum 2000 kcal and if you are falling below 
-				1500 kcal you need to eat within 30 minutes, otherwise you will lose ranking!"
+        text="To be a strong citizen your average intake should be minimum 2000 kcal and if you are falling below 1500 kcal you need to eat within 30 minutes, otherwise you will lose ranking!"
       />
     </EnergyContainer>
   );

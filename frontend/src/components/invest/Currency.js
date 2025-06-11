@@ -28,10 +28,6 @@ export const Currency = () => {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    fetchCoin();
-  }, []);
-
   // Fetch one currency
   const fetchCoin = () => {
     fetch("https://api.coinlore.net/api/ticker/?id=32360")
@@ -40,6 +36,10 @@ export const Currency = () => {
         setCurrency(json[0]);
       });
   };
+
+  useEffect(() => {
+    fetchCoin();
+  }, []);
 
   // Main dialog with price and changes
   const onToggleDialog = () => {

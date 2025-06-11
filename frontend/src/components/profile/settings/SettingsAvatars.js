@@ -35,7 +35,7 @@ export const SettingsAvatars = () => {
       <ChangeTitle>Change your avatar: </ChangeTitle>
       <AvatarContainer>
         {avatars.map((avatar) => (
-          <ButtonContainer>
+          <ButtonContainer key={avatar}>
             <AvatarLabel tabIndex="0" htmlFor={avatar} aria-label={avatar}>
               <Radio
                 type="radio"

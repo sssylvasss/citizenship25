@@ -16,7 +16,7 @@ export const Dialogs = ({
         open={openInfo}
         headerText="Citizen Restaurant"
         onClose={onToggleInfo}
-        text="It is very important that you get the energy that you need. 
+        text="It is very important that you get the energy that you need.
         You need to have a daily average intake of 2000 kcal and
         you keep track on your profile and it will alert you when you are running low.
         And you can not buy food when you have 3000 or more, since the energy needs to be

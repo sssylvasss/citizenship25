@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { Products } from "../components/store/products/AllProducts";
 import { Header } from "../components/header/Header";
 import { Camera } from "../components/header/Camera";
+import { Main, Wrapper } from "../styledcomponents/StyledTheme";
 
 import { StoreContainer, StoreTitle } from "../components/store/Styling";
 

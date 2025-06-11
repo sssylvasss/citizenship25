@@ -1,21 +1,5 @@
 import { CARD_STATUS, DECK_SIZE, API_PAGE_SIZE, BASE_URL } from "./constants";
 
-// Create new game
-export const getImages = async () => {
-  const urls = await getRandomUrls();
-  const deck = urls.concat(urls);
-
-  while (deck.length > DECK_SIZE) {
-    deck.pop();
-  }
-
-  // Shuffle cards
-  const shuffledDeck = deck.sort(() => 0.5 - Math.random());
-  return new Promise((resolve, reject) => {
-    resolve(shuffledDeck);
-  });
-};
-
 const fetchImages = async (page) => {
   const apiUrl = `${BASE_URL}/v2/list?page=${page}&limit=100`;
   const res = await fetch(apiUrl);
@@ -47,4 +31,20 @@ export const getRandomUrls = async () => {
     }
   }
   return urlArray;
+};
+
+// Create new game
+export const getImages = async () => {
+  const urls = await getRandomUrls();
+  const deck = urls.concat(urls);
+
+  while (deck.length > DECK_SIZE) {
+    deck.pop();
+  }
+
+  // Shuffle cards
+  const shuffledDeck = deck.sort(() => 0.5 - Math.random());
+  return new Promise((resolve, reject) => {
+    resolve(shuffledDeck);
+  });
 };
