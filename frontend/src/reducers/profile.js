@@ -131,6 +131,7 @@ export const updateAvatar = (avatar) => {
 				'Content-Type': 'application/json',
 				Authorization: getState().profile.accessToken,
 			},
+			credentials: 'include',
 			body: JSON.stringify({ avatar }),
 		};
 		fetch(
@@ -154,6 +155,7 @@ export const updateBadges = (badges) => {
 				'Content-Type': 'application/json',
 				Authorization: getState().profile.accessToken,
 			},
+			credentials: 'include',
 			body: JSON.stringify({ badges }),
 		};
 		fetch(
@@ -185,6 +187,7 @@ export const updateRanking = (ranking) => {
 				'Content-Type': 'application/json',
 				Authorization: getState().profile.accessToken,
 			},
+			credentials: 'include',
 			body: JSON.stringify({ ranking }),
 		};
 		fetch(
@@ -208,6 +211,7 @@ export const updateCoins = (coins) => {
 				'Content-Type': 'application/json',
 				Authorization: getState().profile.accessToken,
 			},
+			credentials: 'include',
 			body: JSON.stringify({ coins }),
 		};
 		fetch(
@@ -231,6 +235,7 @@ export const updateItems = (items) => {
 				'Content-Type': 'application/json',
 				Authorization: getState().profile.accessToken,
 			},
+			credentials: 'include',
 			body: JSON.stringify( { items } ),
 		};
 		fetch(
@@ -254,6 +259,7 @@ export const updateInvestments = (investmentQuantity, investments) => {
 				'Content-Type': 'application/json',
 				Authorization: getState().profile.accessToken,
 			},
+			credentials: 'include',
 			body: JSON.stringify({ investmentQuantity, investments }),
 		};
 		fetch(
@@ -278,6 +284,7 @@ export const updateEnergy = (energy) => {
 				'Content-Type': 'application/json',
 				Authorization: getState().profile.accessToken,
 			},
+			credentials: 'include',
 			body: JSON.stringify({ energy }),
 		};
 		fetch(
@@ -301,6 +308,7 @@ export const updateHighscoreSpaceball = (highscoreSpaceball) => {
 				'Content-Type': 'application/json',
 				Authorization: getState().profile.accessToken,
 			},
+			credentials: 'include',
 			body: JSON.stringify({ highscoreSpaceball }),
 		};
 		fetch(
@@ -324,6 +332,7 @@ export const updateHighscoreFish = (highscoreFish) => {
 				'Content-Type': 'application/json',
 				Authorization: getState().profile.accessToken,
 			},
+			credentials: 'include',
 			body: JSON.stringify({ highscoreFish }),
 		};
 		fetch(
@@ -347,6 +356,7 @@ export const updateHighscoreMath = (highscoreMath) => {
 				'Content-Type': 'application/json',
 				Authorization: getState().profile.accessToken,
 			},
+			credentials: 'include',
 			body: JSON.stringify({ highscoreMath }),
 		};
 		fetch(
