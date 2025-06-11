@@ -26,7 +26,7 @@ export const SignUp = () => {
 	const [username, setUsername] = useState('');
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
-	const [avatar, setAvatar] = useState('');
+	const [avatar, setAvatar] = useState('man');
 	const [errorMessage, setErrorMessage] = useState('');
 	const [showPassword, setShowPassword] = useState(true);
 	const accessToken = useSelector((store) => store.profile.accessToken);
@@ -157,12 +157,14 @@ export const SignUp = () => {
 							placeholder='username'
 							value={username}
 							onChange={(e) => setUsername(e.target.value)}
+							required
 						/>
 						<TextInput
 							type='email'
 							placeholder='email'
 							value={email}
 							onChange={(e) => setEmail(e.target.value)}
+							required
 						/>
 						<TextInput
 							type={showPassword ? 'password' : 'text'}
@@ -178,12 +180,13 @@ export const SignUp = () => {
 						<ErrorMessageSignUp>{errorMessage}</ErrorMessageSignUp>
 						<ChooseText>Choose your avatar:</ChooseText>
 						<AvatarContainer>
-							{avatars.map((avatar) => (
+							{avatars.map((avatarOption) => (
 								<Avatars
-									key={avatar}
-									avatar={avatar}
-									image={require(`../assets/${avatar}.png`)}
-									onChange={(e) => setAvatar(e.target.value)}
+									key={avatarOption}
+									avatar={avatarOption}
+									image={require(`../assets/${avatarOption}.png`)}
+									onChange={() => setAvatar(avatarOption)}
+									checked={avatar === avatarOption}
 								/>
 							))}
 						</AvatarContainer>
