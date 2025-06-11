@@ -43,7 +43,7 @@ export const InvestDialog = ({
             the current price of the SPACE$. Since it is very volatile (price
             moves up and down) you can both make money but also lose money! So
             it is important to be careful and never invest more than you are
-            ready to lose! So let's say if you invest 100$ when the price is 8$
+            ready to lose! So let&apos;s say if you invest 100$ when the price is 8$
             and then it goes up to 10$, your money will be worth 125$! If you
             see that the price has decreased a lot the last week it could be a
             good opportunity to invest.

@@ -32,7 +32,7 @@ export const ThirdInfo = () => {
           have a good energy intake. In the restaurant you can buy your food and
           also see how much energy it gives you. If your daily average energy
           goes below 1500 you will get too weak and your ranking will decrease
-          if you don't eat soon. You will then see an alert icon on your avatar
+          if you don&apos;t eat soon. You will then see an alert icon on your avatar
           and in your profile.
         </GameText>
       </InfoItem>

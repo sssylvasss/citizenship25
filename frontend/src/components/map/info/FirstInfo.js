@@ -13,8 +13,8 @@ export const FirstInfo = () => {
     <InfoPage>
       <PageTitle>Dear Citizen,</PageTitle>
       <TextInfo>
-        We're glad to have you on onboard our space ship. There are many years
-        left to our destination so it's important that you know how life on the
+        We&apos;re glad to have you on onboard our space ship. There are many years
+        left to our destination so it&apos;s important that you know how life on the
         ship works. The most important part of being a citizen is the ranking.
         You can increase your ranking when you purchase items in the shop, make
         a successful investment, sleep or workout. To get there you need to
