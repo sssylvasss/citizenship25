@@ -97,8 +97,8 @@ Like we wrote at the top, we've had so much fun with this project and we will ke
 
 ## View it live
 
-* https://citizen-ship.netlify.app/
-* https://citizen-ship.herokuapp.com/
+* https://citizenship25.netlify.app/
+* https://citizenship25.onrender.com/
 
 ## Environment Variables
 
@@ -165,11 +165,11 @@ JWT_SECRET=your_jwt_secret
    - Publish directory: `build`
 4. Add environment variables:
    - Go to Site settings > Build & deploy > Environment
-   - Add `REACT_APP_API_URL` with your Render backend URL
+   - Add `REACT_APP_API_URL` with your Render backend URL (https://citizenship25.onrender.com)
 
 ### Local Development with Production Backend
 
 Create a `.env` file in your frontend directory:
 ```env
-REACT_APP_API_URL=https://your-render-backend-url.onrender.com
+REACT_APP_API_URL=https://citizenship25.onrender.com
 ```
