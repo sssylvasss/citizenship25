@@ -5,7 +5,7 @@
   "main": "backend/server.js",
   "type": "module",
   "scripts": {
-    "start": "cd backend && npm run start",
+    "start": "cd backend && npm install && npm run start",
     "backend": "cd backend && npm run dev",
     "frontend": "cd frontend && npm start",
     "dev": "concurrently \"npm run backend\" \"npm run frontend\"",
