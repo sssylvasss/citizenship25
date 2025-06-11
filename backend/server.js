@@ -50,8 +50,8 @@ const mongooseOptions = {
 const defaultOrigins = [
 	'http://localhost:3000',
 	'http://localhost:3001',
-	'https://citisenship25.netlify.app',
-	'https://citizenship25.netlify.app'
+	'https://citizenship25.netlify.app',
+	'https://citizenship25.onrender.com'
 ];
 
 const allowedOrigins = process.env.ALLOWED_ORIGINS 
@@ -219,19 +219,11 @@ const authenticateCitizen = async (req, res, next) => {
 
 // CORS configuration
 app.use(cors({
-	origin: (origin, callback) => {
-		// Allow requests with no origin (like mobile apps or curl requests)
-		if (!origin) return callback(null, true);
-		
-		if (allowedOrigins.indexOf(origin) === -1) {
-			const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
-			return callback(new Error(msg), false);
-		}
-		return callback(null, true);
-	},
+	origin: allowedOrigins,
 	methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
 	allowedHeaders: ['Content-Type', 'Authorization'],
-	credentials: true
+	credentials: true,
+	exposedHeaders: ['Access-Control-Allow-Origin']
 }));
 app.use(express.json());
 
