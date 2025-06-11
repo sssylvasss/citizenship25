@@ -1,41 +1,78 @@
 import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
-import crypto from 'crypto';
 import bcrypt from 'bcrypt';
-import dotenv from 'dotenv';
-import { Server } from 'socket.io';
 import jwt from 'jsonwebtoken';
+import rateLimit from 'express-rate-limit';
+import crypto from 'crypto';
 import { createServer } from 'http';
+import { Server } from 'socket.io';
+import dotenv from 'dotenv';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+// ES module compatibility
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 // Load environment variables
 dotenv.config();
 
-const mongoUrl = process.env.MONGO_URL || 'mongodb://127.0.0.1:27017/spaceAPI';
-const jwtSecret = process.env.JWT_SECRET || 'fallback_secret';
+// Environment configuration
+const isDevelopment = process.env.NODE_ENV !== 'production';
+const port = process.env.PORT || 8080;
 
-// Updated MongoDB connection options for local development
+// Database configuration
+const mongoUrl = process.env.MONGO_URL || 'mongodb://127.0.0.1:27017/spaceAPI';
+const jwtSecret = process.env.JWT_SECRET || crypto.randomBytes(64).toString('hex');
+
+// Rate limiting for password-related endpoints
+const passwordLimiter = rateLimit({
+	windowMs: 15 * 60 * 1000, // 15 minutes
+	max: 5, // limit each IP to 5 requests per windowMs
+	message: { success: false, message: 'Too many password attempts, please try again later.' }
+});
+
+// MongoDB connection options based on environment
 const mongooseOptions = {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
 	dbName: 'spaceAPI',
 	// Only use these options when connecting to Atlas/remote MongoDB
-	...(process.env.MONGO_URL ? {
+	...(process.env.MONGO_URL && process.env.NODE_ENV === 'production' ? {
 		retryWrites: true,
 		w: 'majority',
 		ssl: true
 	} : {})
 };
 
+// Allowed origins based on environment
+const defaultOrigins = [
+	'http://localhost:3000',
+	'http://localhost:3001',
+	'https://citisenship25.netlify.app',
+	'https://citizenship25.netlify.app'
+];
+
+const allowedOrigins = process.env.ALLOWED_ORIGINS 
+	? process.env.ALLOWED_ORIGINS.split(',')
+	: defaultOrigins;
+
+console.log('Server starting with configuration:', {
+	environment: isDevelopment ? 'development' : 'production',
+	port,
+	allowedOrigins,
+	mongoDbUrl: mongoUrl.replace(/\/\/[^:]+:[^@]+@/, '//<credentials>@')
+});
+
 mongoose.connect(mongoUrl, mongooseOptions)
 	.then(() => {
 		console.log('Connected to MongoDB successfully');
 		console.log('Database:', mongoose.connection.db.databaseName);
-		console.log('Connection URL:', mongoUrl.replace(/\/\/[^:]+:[^@]+@/, '//<credentials>@'));
+		console.log('Environment:', process.env.NODE_ENV || 'development');
 	})
 	.catch((error) => {
 		console.error('Failed to connect to MongoDB:', error);
-		console.error('Connection string used:', mongoUrl.replace(/\/\/[^:]+:[^@]+@/, '//<credentials>@'));
 	});
 
 mongoose.connection.on('error', (error) => {
@@ -136,10 +173,10 @@ const CitizenMessage = mongoose.model('CitizenMessage', {
 const app = express();
 const httpServer = createServer(app);
 
-// Socket.io setup
+// Socket.io setup with dynamic origins
 const io = new Server(httpServer, {
 	cors: {
-		origin: ['http://localhost:3000', 'http://localhost:3001'],
+		origin: allowedOrigins,
 		methods: ['GET', 'POST'],
 		credentials: true
 	}
@@ -152,8 +189,6 @@ io.on('connection', (socket) => {
 	socket.on('disconnect', () => {
 		console.log('Client disconnected:', socket.id);
 	});
-
-	// Add your real-time event handlers here
 });
 
 // Enhanced authorization middleware with JWT
@@ -182,21 +217,12 @@ const authenticateCitizen = async (req, res, next) => {
 	}
 };
 
-const port = process.env.PORT || 8080;
-
+// CORS configuration
 app.use(cors({
-	origin: [
-		'http://localhost:3000',
-		'http://localhost:3001',
-		'https://citizenship25.netlify.app',
-		'https://citisenship25.netlify.app',    // Include both possible spellings
-		process.env.FRONTEND_URL
-	].filter(Boolean), // Remove any undefined/null values
-	methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],  // Added OPTIONS for preflight
+	origin: '*', // Allow all origins for local development
+	methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
 	allowedHeaders: ['Content-Type', 'Authorization'],
-	credentials: true,
-	preflightContinue: false,
-	optionsSuccessStatus: 204
+	credentials: true
 }));
 app.use(express.json());
 
@@ -251,20 +277,7 @@ app.get('/citizen/:username', async (req,res) => {
 
 		res.json({
 			success: true,
-			username: citizenProfile.username,
-			userId: citizenProfile._id,
-			badges: citizenProfile.badges,
-			ranking: citizenProfile.ranking,
-			coins: citizenProfile.coins,
-			avatar: citizenProfile.avatar,
-			items: citizenProfile.items,
-			createdAt: citizenProfile.createdAt,
-			investments: citizenProfile.investments,
-			investmentQuantity: citizenProfile.investmentQuantity,
-			energy: citizenProfile.energy,
-			highscoreSpaceball: citizenProfile.highscoreSpaceball,
-			highscoreFish: citizenProfile.highscoreFish,
-			highscoreMath: citizenProfile.highscoreMath,
+			...sanitizeCitizen(citizenProfile)
 		});
 	} catch (error) {
 		res.status(400).json({ 
@@ -276,157 +289,161 @@ app.get('/citizen/:username', async (req,res) => {
 });
 
 //update password when you remember your old password
-app.patch('/citizen/:id/password', authenticateCitizen);
-app.patch('/citizen/:id/password', async (req, res) => {
+app.patch('/citizen/:id/password', authenticateCitizen, passwordLimiter, async (req, res) => {
 	const { _id } = req.citizen;
 	const { password, newPassword } = req.body;
 
 	try {
-		const salt = bcrypt.genSaltSync();
-
-		if (req.citizen && bcrypt.compareSync(password, req.citizen.password)) {
-			const updatedCitizen = await Citizen.findByIdAndUpdate(
-				_id,
-				{
-					password: bcrypt.hashSync(newPassword, salt),
-				},
-				{ new: true }
-			);
-			res.json({ success: true, message: 'password updated!' });
-		} else {
-			res.status(401).json({ success: false, message: 'Could not update password!' });
+		if (!req.citizen || !bcrypt.compareSync(password, req.citizen.password)) {
+			return res.status(401).json({ success: false, message: 'Current password is incorrect' });
 		}
+
+		// Validate new password
+		if (!newPassword || newPassword.length < 8) {
+			return res.status(400).json({ success: false, message: 'New password must be at least 8 characters long' });
+		}
+
+		const salt = bcrypt.genSaltSync(12);
+		await Citizen.findByIdAndUpdate(_id, {
+			password: bcrypt.hashSync(newPassword, salt),
+		});
+
+		res.json({ success: true, message: 'Password updated successfully' });
 	} catch (error) {
-		res.status(400).json({ success: false, message: 'Invalid request', error });
+		res.status(400).json({ success: false, message: 'Could not update password', error: error.message });
 	}
 });
 
 // POST for signing up
 app.post('/signup', async (req, res) => {
 	const { username, email, password, avatar } = req.body;
-	console.log('Signup attempt:', { username, email, avatar }); // Don't log password
-
+	
 	try {
-		const salt = bcrypt.genSaltSync();
-		
-		console.log('Creating new citizen with data:', {
-			username,
-			email,
-			avatar,
-			passwordLength: password ? password.length : 0
-		});
+		// Log minimal info for debugging - NEVER log passwords
+		console.log('Signup attempt:', { username, email, avatar });
 
+		// Validate password requirements
+		if (!password || password.length < 8) {
+			return res.status(400).json({
+				success: false,
+				message: 'Password must be at least 8 characters long'
+			});
+		}
+
+		// Generate salt and hash password
+		const salt = await bcrypt.genSalt(12);
+		const hashedPassword = await bcrypt.hash(password, salt);
+
+		// Create new citizen with hashed password
 		const newCitizen = await new Citizen({
 			username,
 			email,
-			password: bcrypt.hashSync(password, salt),
-			avatar,
+			password: hashedPassword,
+			avatar
 		}).save();
 
-		console.log('Citizen created successfully:', newCitizen._id);
+		// Generate JWT token
+		const token = jwt.sign({ userId: newCitizen._id }, jwtSecret, { expiresIn: '7d' });
 
-		res.json({
+		// Return sanitized response (explicitly exclude sensitive data)
+		const sanitizedResponse = {
 			success: true,
+			userId: newCitizen._id,
 			username: newCitizen.username,
 			email: newCitizen.email,
-			userId: newCitizen._id,
-			accessToken: newCitizen.accessToken,
+			avatar: newCitizen.avatar,
 			badges: newCitizen.badges,
 			ranking: newCitizen.ranking,
 			coins: newCitizen.coins,
-			avatar: newCitizen.avatar,
-			items: newCitizen.items,
 			createdAt: newCitizen.createdAt,
+			items: newCitizen.items,
 			investments: newCitizen.investments,
 			investmentQuantity: newCitizen.investmentQuantity,
 			energy: newCitizen.energy,
 			highscoreSpaceball: newCitizen.highscoreSpaceball,
 			highscoreFish: newCitizen.highscoreFish,
 			highscoreMath: newCitizen.highscoreMath,
-		});
+			accessToken: token
+		};
+
+		res.status(201).json(sanitizedResponse);
 	} catch (error) {
-		console.error('Signup error:', error);
-		console.error('Error details:', {
+		console.error('Signup error:', {
 			name: error.name,
 			code: error.code,
 			message: error.message,
-			keyValue: error.keyValue
+			keyPattern: error.keyPattern
 		});
 
 		if (error.code === 11000) {
-			if (error.keyValue.username) {
-				return res.status(400).json({
-					success: false,
-					message: 'Another citizen already has that username',
-					error,
-				});
-			} else if (error.keyValue.email) {
-				return res.status(400).json({
-					success: false,
-					message: 'You can not have the same email as another citizen',
-					error,
-				});
-			}
-		}
-		
-		if (error.name === 'ValidationError') {
-			return res.status(400).json({
+			const field = Object.keys(error.keyPattern)[0];
+			return res.status(409).json({
 				success: false,
-				message: 'Validation failed',
-				error: {
-					code: 400,
-					errors: Object.keys(error.errors).reduce((acc, key) => {
-						acc[key] = {
-							message: error.errors[key].message
-						};
-						return acc;
-					}, {})
-				}
+				message: `This ${field} is already taken`
 			});
 		}
 
-		return res.status(400).json({ 
-			success: false, 
-			message: 'Could not create citizen', 
-			error: {
-				message: error.message,
-				code: error.code
-			}
+		res.status(400).json({
+			success: false,
+			message: 'Failed to create account'
 		});
 	}
 });
 
 // POST for signing in
-app.post('/signin', async (req, res) => {
+app.post('/signin', passwordLimiter, async (req, res) => {
 	const { username, password } = req.body;
 
 	try {
 		const citizen = await Citizen.findOne({ username });
-
-		if (citizen && bcrypt.compareSync(password, citizen.password)) {
-			res.json({
-				success: true,
-				userId: citizen._id,
-				username: citizen.username,
-				accessToken: citizen.accessToken,
-				badges: citizen.badges,
-				ranking: citizen.ranking,
-				coins: citizen.coins,
-				avatar: citizen.avatar,
-				items: citizen.items,
-				createdAt: citizen.createdAt,
-				investments: citizen.investments,
-				investmentQuantity: citizen.investmentQuantity,
-				energy: citizen.energy,
-				highscoreSpaceball: citizen.highscoreSpaceball,
-				highscoreFish: citizen.highscoreFish,
-				highscoreMath: citizen.highscoreMath,
+		
+		if (!citizen) {
+			return res.status(401).json({
+				success: false,
+				message: 'Invalid username or password'
 			});
-		} else {
-			res.status(401).json({ success: false, message: 'Invalid username or password' });
 		}
+
+		const isValidPassword = await bcrypt.compare(password, citizen.password);
+		
+		if (!isValidPassword) {
+			return res.status(401).json({
+				success: false,
+				message: 'Invalid username or password'
+			});
+		}
+
+		// Generate JWT token
+		const token = jwt.sign({ userId: citizen._id }, jwtSecret, { expiresIn: '7d' });
+
+		// Return sanitized response (explicitly exclude sensitive data)
+		const sanitizedResponse = {
+			success: true,
+			userId: citizen._id,
+			username: citizen.username,
+			email: citizen.email,
+			avatar: citizen.avatar,
+			badges: citizen.badges,
+			ranking: citizen.ranking,
+			coins: citizen.coins,
+			createdAt: citizen.createdAt,
+			items: citizen.items,
+			investments: citizen.investments,
+			investmentQuantity: citizen.investmentQuantity,
+			energy: citizen.energy,
+			highscoreSpaceball: citizen.highscoreSpaceball,
+			highscoreFish: citizen.highscoreFish,
+			highscoreMath: citizen.highscoreMath,
+			accessToken: token
+		};
+
+		res.json(sanitizedResponse);
 	} catch (error) {
-		res.status(400).json({ success: false, message: 'Invalid request', error });
+		console.error('Signin error:', error.message);
+		res.status(500).json({
+			success: false,
+			message: 'Internal server error'
+		});
 	}
 });
 
@@ -670,7 +687,17 @@ app.patch('/citizen/:id/highscoreMath', async (req, res) => {
 	}
 });
 
-// Update server startup
+// Helper function to sanitize citizen data
+const sanitizeCitizen = (citizen) => {
+	if (!citizen) return null;
+	const sanitized = citizen.toObject ? citizen.toObject() : { ...citizen };
+	// Never send password hash in response
+	delete sanitized.password;
+	return sanitized;
+};
+
+// Start the server
 httpServer.listen(port, () => {
 	console.log(`Server running on http://localhost:${port}`);
+	console.log('Environment:', process.env.NODE_ENV || 'development');
 });

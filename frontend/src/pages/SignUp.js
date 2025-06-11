@@ -20,7 +20,9 @@ import {
 	EyeButtonSignUp,
 	ChooseText,
 	AvatarContainer,
+	InputWrapper
 } from '../components/signinupform/Styling';
+import { PasswordStrength } from '../components/signinupform/PasswordStrength';
 
 export const SignUp = () => {
 	const [username, setUsername] = useState('');
@@ -42,17 +44,34 @@ export const SignUp = () => {
 		}
 	}, [accessToken, navigate]);
 
+	const validatePassword = (password) => {
+		const requirements = [
+			password.length >= 8,
+			/[A-Z]/.test(password),
+			/[a-z]/.test(password),
+			/\d/.test(password),
+			/[!@#$%^&*(),.?":{}|<>]/.test(password)
+		];
+		return requirements.every(req => req);
+	};
+
 	const handleFormSubmit = async (e) => {
 		e.preventDefault();
+
+		if (!validatePassword(password)) {
+			setErrorMessage('Please meet all password requirements');
+			return;
+		}
+
 		dispatch(ui.actions.setLoading(true));
 
 		try {
 			const options = {
 				method: 'POST',
 				headers: {
-					'Content-Type': 'application/json',
+					'Content-Type': 'application/json'
 				},
-				body: JSON.stringify({ username, email, password, avatar }),
+				body: JSON.stringify({ username, email, password, avatar })
 			};
 
 			const response = await fetch(API_URL('signup'), options);
@@ -61,44 +80,19 @@ export const SignUp = () => {
 			if (data.success) {
 				batch(() => {
 					dispatch(profile.actions.setUsername(data.username));
-					dispatch(profile.actions.setEmail(data.email));
+					dispatch(profile.actions.setUserId(data.userId));
 					dispatch(profile.actions.setAccessToken(data.accessToken));
+					dispatch(profile.actions.setItems(data.items));
+					dispatch(profile.actions.setAvatar(data.avatar));
 					dispatch(profile.actions.setBadges(data.badges));
 					dispatch(profile.actions.setRanking(data.ranking));
 					dispatch(profile.actions.setCoins(data.coins));
-					dispatch(profile.actions.setItems(data.items));
-					dispatch(profile.actions.setAvatar(data.avatar));
-					dispatch(profile.actions.setCreatedAt(data.createdAt));
-					dispatch(profile.actions.setUserId(data.userId));
-					dispatch(profile.actions.setInvestments({ 
-						quantity: data.investmentQuantity, 
-						amount: data.investments 
-					}));
 					dispatch(profile.actions.setEnergy(data.energy));
-					dispatch(profile.actions.setHighscoreSpaceball(data.highscoreSpaceball));
-					dispatch(profile.actions.setHighscoreFish(data.highscoreFish));
-					dispatch(profile.actions.setHighscoreMath(data.highscoreMath));
-
-					localStorage.setItem(
-						'profile',
-						JSON.stringify({
-							username: data.username,
-							userId: data.userId,
-							accessToken: data.accessToken,
-							badges: data.badges,
-							ranking: data.ranking,
-							coins: data.coins,
-							items: data.items,
-							avatar: data.avatar,
-							createdAt: data.createdAt,
-							investments: data.investments,
-							investmentQuantity: data.investmentQuantity,
-							energy: data.energy,
-							highscoreSpaceball: data.highscoreSpaceball,
-							highscoreFish: data.highscoreFish,
-							highscoreMath: data.highscoreMath,
-						})
-					);
+					dispatch(profile.actions.setInvestments({
+						quantity: data.investmentQuantity,
+						amount: data.investments
+					}));
+					dispatch(profile.actions.setCreatedAt(data.createdAt));
 				});
 				navigate('/');
 			} else {
@@ -152,31 +146,41 @@ export const SignUp = () => {
 				<>
 					<Title>Citizen Ship</Title>
 					<Form onSubmit={handleFormSubmit}>
-						<TextInput
-							type='text'
-							placeholder='username'
-							value={username}
-							onChange={(e) => setUsername(e.target.value)}
-							required
-						/>
-						<TextInput
-							type='email'
-							placeholder='email'
-							value={email}
-							onChange={(e) => setEmail(e.target.value)}
-							required
-						/>
-						<TextInput
-							type={showPassword ? 'password' : 'text'}
-							placeholder='password'
-							value={password}
-							onChange={(e) => setPassword(e.target.value)}
-							minLength='5'
-							required
-						/>
-						<EyeButtonSignUp type='button' onClick={togglePassword}>
-							{showPassword ? <FaEye /> : <FaEyeSlash />}
-						</EyeButtonSignUp>
+						<InputWrapper>
+							<TextInput
+								type='text'
+								placeholder='username'
+								value={username}
+								onChange={(e) => setUsername(e.target.value)}
+								required
+							/>
+						</InputWrapper>
+						<InputWrapper>
+							<TextInput
+								type='email'
+								placeholder='email'
+								value={email}
+								onChange={(e) => setEmail(e.target.value)}
+								required
+							/>
+						</InputWrapper>
+						<InputWrapper>
+							<TextInput
+								type={showPassword ? 'password' : 'text'}
+								placeholder='password'
+								value={password}
+								onChange={(e) => setPassword(e.target.value)}
+								required
+							/>
+							<EyeButtonSignUp 
+								type='button' 
+								onClick={togglePassword}
+								visible={password.length > 0}
+							>
+								{showPassword ? <FaEye /> : <FaEyeSlash />}
+							</EyeButtonSignUp>
+						</InputWrapper>
+						<PasswordStrength password={password} />
 						<ErrorMessageSignUp>{errorMessage}</ErrorMessageSignUp>
 						<ChooseText>Choose your avatar:</ChooseText>
 						<AvatarContainer>

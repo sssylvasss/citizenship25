@@ -48,10 +48,21 @@ export const Label = styled.label`
   }
 `;
 
+export const InputWrapper = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 250px;
+  margin: 0 auto;
+  @media (min-width: 768px) {
+    width: 300px;
+  }
+`;
+
 export const Input = styled.input`
   padding: 7px;
   margin: 0;
-  width: 250px;
+  width: 100%;
   border-bottom: 3px solid ${props => props.theme.colors.primary};
   border-top: none;
   border-right: none;
@@ -62,7 +73,6 @@ export const Input = styled.input`
   font-family: 'Trispace', serif;
   background-color: ${props => props.theme.colors.primary};
   @media (min-width: 768px) {
-    width: 300px;
     font-size: 16px;
   }
 `;
@@ -144,8 +154,9 @@ export const AvatarContainer = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
-  margin: 10px 0;
-  padding: 5px 0 0 0;
+  max-width: 400px;
+  margin: 10px auto;
+  padding: 10px;
   flex-wrap: wrap;
   gap: 10px;
 `;
@@ -363,40 +374,52 @@ export const Letter = styled.p`
 export const ButtonContainer = styled.div`
   display: flex;
   align-items: center;
-  padding: 5px 0 0 0;
+  justify-content: center;
+  margin: 5px;
+  position: relative;
 `;
 
 export const AvatarLabel = styled.label`
   display: flex;
   align-items: center;
+  justify-content: center;
   border-radius: 50%;
-  background-color: ${props => props.theme.secondary};
+  background-color: ${props => props.theme.colors.background};
   border: 2px solid transparent;
-  width: 100%;
-  height: 100%;
+  width: fit-content;
+  height: fit-content;
   position: relative;
-  margin-right: 10px;
-  z-index: 1; 
-  :hover {
-    border: 2px solid ${props => props.theme.hover};
+  margin: 0;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+
+  @media (min-width: 768px) {
+    &:hover {
+      transform: scale(1.1);
+      border: 2px solid ${props => props.theme.colors.secondary};
+    }
   }
 `;
 
 export const Avatar = styled.img`
-  width: 40px;
-  height: 40px;
-  padding: 2px;
+  width: 45px;
+  height: 45px;
+  padding: 3px;
   border-radius: 50%;
   cursor: pointer;
   outline: none;
-  border: 2px solid ${props => props.theme.secondary};
+  border: 3px solid ${props => props.theme.colors.primary};
+  transition: all 0.2s ease-in-out;
+  background-color: ${props => props.theme.colors.background};
+
   @media (max-width: 320px) {
-    width: 34px;
-    height: 34px;
+    width: 40px;
+    height: 40px;
   }
+  
   @media (min-width: 768px) {
-    width: 64px;
-    height: 64px;
+    width: 60px;
+    height: 60px;
     padding: 4px;
   }
 `;
@@ -412,8 +435,15 @@ export const Radio = styled.input`
   padding: 0;
   margin: 0;
   outline: none;
+  
   &:checked ~ ${Avatar} {
-    border: 2px solid ${props => props.theme.hover};
+    border: 3px solid ${props => props.theme.colors.accent};
+    transform: scale(1.1);
+    box-shadow: 0 0 10px ${props => props.theme.colors.accent}40;
+  }
+
+  &:focus-visible ~ ${Avatar} {
+    box-shadow: 0 0 0 2px ${props => props.theme.colors.accent};
   }
 `;
 
@@ -438,6 +468,9 @@ export const EyeButton = styled.button`
   color: ${props => props.theme.colors.text};
   font-size: 16px;
   cursor: pointer;
+  opacity: ${props => props.visible ? '1' : '0'};
+  visibility: ${props => props.visible ? 'visible' : 'hidden'};
+  transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
   :hover {
     color: ${props => props.theme.colors.secondary};
   }
@@ -447,11 +480,7 @@ export const EyeButton = styled.button`
 `;
 
 export const EyeButtonSignUp = styled(EyeButton)`
-  right: 10px;
-  top: 185px;
-  @media (min-width: 768px) {
-    top: 195px;
-  }
+  top: 50%;
 `;
 
 export const ErrorMessageSignUp = styled(ErrorMessage)`

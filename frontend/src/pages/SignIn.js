@@ -16,6 +16,7 @@ import {
 	Form,
 	ErrorMessage,
 	EyeButton,
+	InputWrapper
 } from '../components/signinupform/Styling';
 import { API_URL } from '../utils/utils';
 
@@ -100,21 +101,29 @@ export const SignIn = () => {
 				<>
 					<TitleAnimation />
 					<Form onSubmit={handleFormSubmit}>
-						<TextInputSignIn
-							type='text'
-							placeholder='username'
-							value={username}
-							onChange={(e) => setUsername(e.target.value)}
-						/>
-						<TextInputSignIn
-							type={showPassword ? 'password' : 'text'}
-							placeholder='password'
-							value={password}
-							onChange={(e) => setPassword(e.target.value)}
-						/>
-						<EyeButton type='button' onClick={togglePassword}>
-							{showPassword ? <FaEye /> : <FaEyeSlash />}
-						</EyeButton>
+						<InputWrapper>
+							<TextInputSignIn
+								type='text'
+								placeholder='username'
+								value={username}
+								onChange={(e) => setUsername(e.target.value)}
+							/>
+						</InputWrapper>
+						<InputWrapper>
+							<TextInputSignIn
+								type={showPassword ? 'password' : 'text'}
+								placeholder='password'
+								value={password}
+								onChange={(e) => setPassword(e.target.value)}
+							/>
+							<EyeButton 
+								type='button' 
+								onClick={togglePassword}
+								visible={password.length > 0}
+							>
+								{showPassword ? <FaEye /> : <FaEyeSlash />}
+							</EyeButton>
+						</InputWrapper>
 						{errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
 						<SubmitButtonSignIn
 							type='submit'
