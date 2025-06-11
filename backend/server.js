@@ -14,23 +14,33 @@ dotenv.config();
 const mongoUrl = process.env.MONGO_URL || 'mongodb://127.0.0.1:27017/spaceAPI';
 const jwtSecret = process.env.JWT_SECRET || 'fallback_secret';
 
-// Updated MongoDB connection options
+// Updated MongoDB connection options for local development
 const mongooseOptions = {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
-	dbName: 'spaceAPI',  // Specify database name explicitly
-	retryWrites: true,
-	w: 'majority',
-	ssl: true
+	dbName: 'spaceAPI',
+	// Only use these options when connecting to Atlas/remote MongoDB
+	...(process.env.MONGO_URL ? {
+		retryWrites: true,
+		w: 'majority',
+		ssl: true
+	} : {})
 };
 
 mongoose.connect(mongoUrl, mongooseOptions)
 	.then(() => {
-		console.log('Connected to MongoDB');
+		console.log('Connected to MongoDB successfully');
+		console.log('Database:', mongoose.connection.db.databaseName);
+		console.log('Connection URL:', mongoUrl.replace(/\/\/[^:]+:[^@]+@/, '//<credentials>@'));
 	})
 	.catch((error) => {
 		console.error('Failed to connect to MongoDB:', error);
+		console.error('Connection string used:', mongoUrl.replace(/\/\/[^:]+:[^@]+@/, '//<credentials>@'));
 	});
+
+mongoose.connection.on('error', (error) => {
+	console.error('MongoDB connection error:', error);
+});
 
 mongoose.Promise = Promise;
 
@@ -294,9 +304,17 @@ app.patch('/citizen/:id/password', async (req, res) => {
 // POST for signing up
 app.post('/signup', async (req, res) => {
 	const { username, email, password, avatar } = req.body;
+	console.log('Signup attempt:', { username, email, avatar }); // Don't log password
 
 	try {
 		const salt = bcrypt.genSaltSync();
+		
+		console.log('Creating new citizen with data:', {
+			username,
+			email,
+			avatar,
+			passwordLength: password ? password.length : 0
+		});
 
 		const newCitizen = await new Citizen({
 			username,
@@ -304,6 +322,8 @@ app.post('/signup', async (req, res) => {
 			password: bcrypt.hashSync(password, salt),
 			avatar,
 		}).save();
+
+		console.log('Citizen created successfully:', newCitizen._id);
 
 		res.json({
 			success: true,
@@ -325,6 +345,14 @@ app.post('/signup', async (req, res) => {
 			highscoreMath: newCitizen.highscoreMath,
 		});
 	} catch (error) {
+		console.error('Signup error:', error);
+		console.error('Error details:', {
+			name: error.name,
+			code: error.code,
+			message: error.message,
+			keyValue: error.keyValue
+		});
+
 		if (error.code === 11000) {
 			if (error.keyValue.username) {
 				return res.status(400).json({
@@ -360,7 +388,10 @@ app.post('/signup', async (req, res) => {
 		return res.status(400).json({ 
 			success: false, 
 			message: 'Could not create citizen', 
-			error 
+			error: {
+				message: error.message,
+				code: error.code
+			}
 		});
 	}
 });
