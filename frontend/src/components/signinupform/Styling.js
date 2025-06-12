@@ -300,6 +300,57 @@ export const ChangeTextSignIn = styled(ChangeText)`
   animation: ${input} 3.7s linear;
 `;
 
+// Start Button
+export const StartButton = styled.button`
+  padding: 20px 40px;
+  font-size: 24px;
+  color: white;
+  background-color: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  font-family: "Trispace", serif;
+  text-transform: uppercase;
+  transition: all 0.5s ease;
+  letter-spacing: 3px;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(5px);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+  z-index: 2;
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      120deg,
+      transparent,
+      rgba(255, 255, 255, 0.2),
+      transparent
+    );
+    transition: 0.5s;
+  }
+
+  &:hover {
+    transform: scale(1.05);
+    border-color: white;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+
+    &:before {
+      left: 100%;
+    }
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 25px rgba(255, 255, 255, 0.5);
+  }
+`;
+
 // Title Animation
 export const AnimationTitle = styled(Title)`
   margin-bottom: 40px;
@@ -489,4 +540,94 @@ export const EyeButtonSignUp = styled(EyeButton)`
 export const ErrorMessageSignUp = styled(ErrorMessage)`
   margin: 5px 0;
   color: #e83715;
+`;
+
+export const StartScreen = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  overflow: hidden;
+`;
+
+const twinkleAnimation = keyframes`
+  0% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.3;
+  }
+`;
+
+export const Star = styled.div`
+  position: absolute;
+  width: ${props => props.size}px;
+  height: ${props => props.size}px;
+  background: #FFF;
+  border-radius: 50%;
+  left: ${props => props.left};
+  top: ${props => props.top};
+  animation: ${twinkleAnimation} ${props => props.animationDuration} ease-in-out infinite;
+  animation-delay: ${props => props.animationDelay};
+  box-shadow: 0 0 3px #FFF;
+`;
+
+const shootingStarAnimation = keyframes`
+  0% {
+    transform: rotate(315deg) translateX(0);
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(315deg) translateX(-1000px);
+    opacity: 0;
+  }
+`;
+
+const shootingStarTailAnimation = keyframes`
+  0% {
+    width: 0;
+  }
+  30% {
+    width: 100px;
+  }
+  100% {
+    width: 0;
+  }
+`;
+
+export const ShootingStar = styled.div`
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  animation: ${shootingStarAnimation} ${props => props.duration || '3s'} linear infinite;
+  animation-delay: ${props => props.delay || '0s'};
+  left: ${props => props.left || '50%'};
+  top: ${props => props.top || '50%'};
+  opacity: 0;
+
+  &:before {
+    content: '';
+    position: absolute;
+    width: 100px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, white);
+    transform: translateX(0);
+    border-radius: 100%;
+    animation: ${shootingStarTailAnimation} ${props => props.duration || '3s'} linear infinite;
+    animation-delay: ${props => props.delay || '0s'};
+  }
 `;
