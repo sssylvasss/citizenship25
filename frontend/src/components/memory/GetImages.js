@@ -1,30 +1,35 @@
-import { CARD_STATUS, DECK_SIZE, API_PAGE_SIZE, BASE_URL } from "./constants";
+import { CARD_STATUS, DECK_SIZE, API_PAGE_SIZE, BASE_URL, NASA_API_KEY } from "./constants";
 
 const fetchImages = async (page) => {
-  const apiUrl = `${BASE_URL}/v2/list?page=${page}&limit=100`;
+  // NASA APOD API - fetch multiple days of space images
+  const today = new Date();
+  const startDate = new Date(today);
+  startDate.setDate(today.getDate() - 100); // Get images from last 100 days
+
+  const apiUrl = `${BASE_URL}?api_key=${NASA_API_KEY}&start_date=${startDate.toISOString().split('T')[0]}&end_date=${today.toISOString().split('T')[0]}`;
   const res = await fetch(apiUrl);
   const data = await res.json();
-  return data;
+  return Array.isArray(data) ? data : [data];
 };
 
 export const getRandomUrls = async () => {
   const urlArray = [];
   const imageSet = new Set();
-  const page = Math.floor(Math.random() * API_PAGE_SIZE);
-  const urlList = await fetchImages(page);
+  const urlList = await fetchImages();
 
-  // Randomly pick cards from list from API
+  // Randomly pick space images from NASA API
   while (imageSet.size < Math.ceil(DECK_SIZE / 2)) {
     const i = Math.floor(Math.random() * urlList.length);
 
-    if (urlList[i]) {
-      const { id } = urlList[i];
+    if (urlList[i] && urlList[i].url) {
+      const { date, title } = urlList[i];
 
-      if (!imageSet.has(id)) {
-        imageSet.add(id);
+      if (!imageSet.has(date)) {
+        imageSet.add(date);
         urlArray.push({
-          id,
-          url: `${BASE_URL}/id/${id}/150/200`,
+          id: date,
+          url: urlList[i].url,
+          title: title,
           status: CARD_STATUS.HIDDEN,
         });
       }

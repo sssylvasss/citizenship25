@@ -30,10 +30,76 @@ export const Quiz = () => {
   const [score, setScore] = useState(0);
   const [openFinish, setOpenFinish] = useState(false);
   const [animation, setAnimation] = useState(false);
+  const [feedback, setFeedback] = useState(null);
+  const [showFeedback, setShowFeedback] = useState(false);
   const accessToken = useSelector((store) => store.profile.accessToken);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  // Mix together incorrect and correct
+  const randomizeAnswer = (array, correctAnswer) => {
+    const randomIndex = Math.floor(Math.random() * 2);
+    array.splice(randomIndex, 0, correctAnswer);
+  };
+
+  // Fallback questions in case API fails
+  const fallbackQuestions = {
+    easy: [
+      {
+        question: "Is the Earth round?",
+        correct_answer: "True",
+        incorrect_answers: ["False"]
+      },
+      {
+        question: "Do humans have 4 lungs?",
+        correct_answer: "False",
+        incorrect_answers: ["True"]
+      },
+      {
+        question: "Is the sun a star?",
+        correct_answer: "True",
+        incorrect_answers: ["False"]
+      },
+      {
+        question: "Can fish breathe underwater?",
+        correct_answer: "True",
+        incorrect_answers: ["False"]
+      },
+      {
+        question: "Is the moon made of cheese?",
+        correct_answer: "False",
+        incorrect_answers: ["True"]
+      }
+    ],
+    hard: [
+      {
+        question: "Is quantum entanglement faster than light?",
+        correct_answer: "False",
+        incorrect_answers: ["True"]
+      },
+      {
+        question: "Do black holes emit Hawking radiation?",
+        correct_answer: "True",
+        incorrect_answers: ["False"]
+      },
+      {
+        question: "Is the speed of light constant in all mediums?",
+        correct_answer: "False",
+        incorrect_answers: ["True"]
+      },
+      {
+        question: "Do neutrinos have mass?",
+        correct_answer: "True",
+        incorrect_answers: ["False"]
+      },
+      {
+        question: "Is time dilation a real phenomenon?",
+        correct_answer: "True",
+        incorrect_answers: ["False"]
+      }
+    ]
+  };
 
   useEffect(() => {
     if (!accessToken) {
@@ -46,14 +112,45 @@ export const Quiz = () => {
     fetch(
       `https://opentdb.com/api.php?amount=10&difficulty=${difficulty}&type=boolean`,
     )
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.status === 429) {
+          throw new Error('Rate limit exceeded. Please wait a moment and try again.');
+        }
+        if (!res.ok) {
+          throw new Error(`API error: ${res.status}`);
+        }
+        return res.json();
+      })
       .then((data) => {
-        randomizeAnswer(
-          data.results[0].incorrect_answers,
-          data.results[0].correct_answer,
-        );
-        setQuestions(data.results);
-        setLoaded(true);
+        if (data.results && data.results.length > 0) {
+          randomizeAnswer(
+            data.results[0].incorrect_answers,
+            data.results[0].correct_answer,
+          );
+          setQuestions(data.results);
+          setLoaded(true);
+        } else {
+          console.error('No questions received from API');
+          setLoaded(false);
+        }
+      })
+      .catch((error) => {
+        console.error('Error fetching questions:', error);
+        // Use fallback questions instead of failing
+        const fallbackData = fallbackQuestions[difficulty];
+        if (fallbackData && fallbackData.length > 0) {
+          // Randomize the fallback questions order
+          const shuffledFallback = [...fallbackData].sort(() => Math.random() - 0.5);
+          randomizeAnswer(
+            shuffledFallback[0].incorrect_answers,
+            shuffledFallback[0].correct_answer,
+          );
+          setQuestions(shuffledFallback);
+          setLoaded(true);
+        } else {
+          setLoaded(false);
+          alert(`Failed to load questions: ${error.message}. Please try again later.`);
+        }
       });
   }, [difficulty]);
 
@@ -68,39 +165,44 @@ export const Quiz = () => {
     return () => clearInterval(timer);
   }, [counter]);
 
-  // Mix together incorrect and correct
-  const randomizeAnswer = (array, correctAnswer) => {
-    const randomIndex = Math.floor(Math.random() * 2);
-    array.splice(randomIndex, 0, correctAnswer);
-  };
 
-  // Choose easy or hard
-  // Start timer
   const handleDifficulty = (level) => {
     setDifficulty(level);
     setStart(true);
     setCounter(30);
   };
 
-  // Checking answer and moving on to next question
-  // If questions run out, load new ones
   const handleAnswer = (e, answer) => {
     e.preventDefault();
     new Audio(audio).play();
 
-    if (answer === questions[questionIndex].correct_answer) {
+    // Show feedback
+    const isCorrect = answer === questions[questionIndex].correct_answer;
+    setFeedback({
+      isCorrect
+    });
+    setShowFeedback(true);
+
+    if (isCorrect) {
       setScore(score + 1);
     }
-    if (questionIndex + 1 < questions.length) {
-      randomizeAnswer(
-        questions[questionIndex + 1].incorrect_answers,
-        questions[questionIndex + 1].correct_answer,
-      );
-      setQuestionIndex(questionIndex + 1);
-    } else {
-      fetchQuestion();
-      setQuestionIndex(0);
-    }
+
+    // Move to next question after showing feedback
+    setTimeout(() => {
+      setShowFeedback(false);
+      setFeedback(null);
+
+      if (questionIndex + 1 < questions.length) {
+        randomizeAnswer(
+          questions[questionIndex + 1].incorrect_answers,
+          questions[questionIndex + 1].correct_answer,
+        );
+        setQuestionIndex(questionIndex + 1);
+      } else {
+        fetchQuestion();
+        setQuestionIndex(0);
+      }
+    }, 1500); // Show feedback for 1.5 seconds
   };
 
   // Finish dialog when time is up
@@ -137,7 +239,12 @@ export const Quiz = () => {
               score={score || "0"}
               counter={counter.toString().padStart(2, "0")}
             />
-            {loaded && (
+            {!loaded && (
+              <TriviaContainer>
+                <Question>Loading questions...</Question>
+              </TriviaContainer>
+            )}
+            {loaded && questions && questions.length > 0 && questions[questionIndex] && (
               <TriviaContainer>
                 <Question>
                   {questions[questionIndex].question
@@ -150,6 +257,7 @@ export const Quiz = () => {
                       <AnswerButton
                         key={option}
                         onClick={(e) => handleAnswer(e, option)}
+                        disabled={showFeedback}
                       >
                         {option}
                       </AnswerButton>
@@ -157,6 +265,22 @@ export const Quiz = () => {
                   })}
                 </ButtonContainer>
                 <Animation />
+                {showFeedback && (
+                  <div style={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    zIndex: 1000,
+                    textAlign: 'center',
+                    fontSize: '64px',
+                    fontWeight: 'bold',
+                    color: feedback.isCorrect ? '#4CAF50' : '#f44336',
+                    textShadow: '2px 2px 4px rgba(0,0,0,0.5)'
+                  }}>
+                    {feedback.isCorrect ? '✓' : '✗'}
+                  </div>
+                )}
               </TriviaContainer>
             )}
             <GameFinish

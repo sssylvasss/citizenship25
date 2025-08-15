@@ -15,7 +15,7 @@ export const MainContainer = styled.main`
 export const Card = styled.div`
   height: 120px;
   width: 90px;
-  background-color: ${(props) => props.theme.secondary};
+  background-color: ${(props) => props.theme.colors.secondary};
   margin: 5px;
   cursor: pointer;
   :hover {
@@ -52,9 +52,9 @@ export const GameContainer = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
-  background-color: ${(props) => props.theme.primary};
-  border: 4px solid ${(props) => props.theme.secondary};
-  color: ${(props) => props.theme.textColor};
+  background-color: ${(props) => props.theme.colors.primary};
+  border: 4px solid ${(props) => props.theme.colors.secondary};
+  color: ${(props) => props.theme.colors.text};
   padding: 20px 10px;
   @media (min-width: 768px) {
     max-width: 90%;
