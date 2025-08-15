@@ -35,7 +35,7 @@ export const MyCart = () => {
   const [openFail, setOpenFail] = useState(false);
 
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const totalPrice = useSelector((store) =>
     store.cart.items.reduce(
@@ -76,12 +76,12 @@ export const MyCart = () => {
 
   const onConfirmed = () => {
     setOpenConfirmation(false);
-    history.push("/");
+    navigate("/");
   };
 
   const onFail = () => {
     setOpenFail(false);
-    history.push("/store");
+    navigate("/store");
   };
 
   return (
