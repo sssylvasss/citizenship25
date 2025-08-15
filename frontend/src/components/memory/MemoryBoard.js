@@ -6,6 +6,7 @@ import { MemoryCard } from "./MemoryCard";
 import { getImages } from "./GetImages";
 import { GameTitle } from "../reusables/GameTitle";
 import { GameScore } from "../reusables/GameScore";
+import { Loader } from "../loader/Loader";
 import { CARD_STATUS, GAME_STATUS, DECK_SIZE } from "./constants";
 import { Container, GameContainer, GameGrid } from "./Styling";
 
@@ -15,6 +16,7 @@ export const MemoryBoard = ({ gameStatus, onGameUpdate }) => {
   const [firstCard, setFirstCard] = useState(null);
   const [secondCard, setSecondCard] = useState(null);
   const [openCardCounter, setOpenCardCounter] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Setting flip count
   const flipCounter = useRef(0);
@@ -106,12 +108,15 @@ export const MemoryBoard = ({ gameStatus, onGameUpdate }) => {
   // Start the game
   const startGame = useCallback(async () => {
     try {
+      setIsLoading(true);
       const newDeck = await getImages();
       setDeck(newDeck);
       flipCounter.current = 0;
       onGameUpdate(GAME_STATUS.IN_PROGRESS);
     } catch (error) {
       alert(`Error: ${error}`);
+    } finally {
+      setIsLoading(false);
     }
   }, [onGameUpdate]);
 
@@ -148,16 +153,49 @@ export const MemoryBoard = ({ gameStatus, onGameUpdate }) => {
       <GameScore type="Flips:" score={flipCounter.current || "0"} />
       <Container>
         <GameContainer>
-          <GameGrid>
-            {Object.entries(deck).map(([key, value]) => (
-              <MemoryCard
-                key={key}
-                index={key}
-                data={value}
-                handleClick={handleClick}
-              />
-            ))}
-          </GameGrid>
+          {isLoading ? (
+            <div style={{ 
+              display: 'flex', 
+              justifyContent: 'center', 
+              alignItems: 'center', 
+              minHeight: '300px',
+              flexDirection: 'column',
+              gap: '20px'
+            }}>
+              <div style={{
+                width: '50px',
+                height: '50px',
+                border: '4px solid #f3f3f3',
+                borderTop: '4px solid #3498db',
+                borderRadius: '50%',
+                animation: 'spin 1s linear infinite'
+              }}></div>
+              <div style={{
+                color: '#fff',
+                fontSize: '16px',
+                textAlign: 'center'
+              }}>
+                Loading space images from NASA...
+              </div>
+              <style>{`
+                @keyframes spin {
+                  0% { transform: rotate(0deg); }
+                  100% { transform: rotate(360deg); }
+                }
+              `}</style>
+            </div>
+          ) : (
+            <GameGrid>
+              {Object.entries(deck).map(([key, value]) => (
+                <MemoryCard
+                  key={key}
+                  index={key}
+                  data={value}
+                  handleClick={handleClick}
+                />
+              ))}
+            </GameGrid>
+          )}
         </GameContainer>
       </Container>
     </>
