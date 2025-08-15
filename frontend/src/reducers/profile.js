@@ -50,52 +50,68 @@ export const profile = createSlice({
   reducers: {
     setUsername: (store, action) => {
       store.username = action.payload;
+      localStorage.setItem('profile', JSON.stringify(store));
     },
     setEmail: (store, action) => {
       store.email = action.payload;
+      localStorage.setItem('profile', JSON.stringify(store));
     },
     setAccessToken: (store, action) => {
       store.accessToken = action.payload;
+      localStorage.setItem('profile', JSON.stringify(store));
     },
     setUserId: (store, action) => {
       store.userId = action.payload;
+      localStorage.setItem('profile', JSON.stringify(store));
     },
     setBadges: (store, action) => {
       store.badges = action.payload;
+      localStorage.setItem('profile', JSON.stringify(store));
     },
     setRanking: (store, action) => {
       store.ranking = action.payload;
+      localStorage.setItem('profile', JSON.stringify(store));
     },
     setCoins: (store, action) => {
       store.coins = action.payload;
+      localStorage.setItem('profile', JSON.stringify(store));
     },
     setCreatedAt: (store, action) => {
       store.createdAt = action.payload;
+      localStorage.setItem('profile', JSON.stringify(store));
     },
     setAvatar: (store, action) => {
       store.avatar = action.payload;
+      localStorage.setItem('profile', JSON.stringify(store));
     },
     setItems: (store, action) => {
       store.items = action.payload;
+      localStorage.setItem('profile', JSON.stringify(store));
     },
     setInvestments: (store, action) => {
       store.investmentQuantity = action.payload.quantity;
       store.investments = action.payload.amount;
+      localStorage.setItem('profile', JSON.stringify(store));
     },
     setInvestmentQuantity: (store, action) => {
       store.investmentQuantity = action.payload;
+      localStorage.setItem('profile', JSON.stringify(store));
     },
     setEnergy: (store, action) => {
       store.energy = action.payload;
+      localStorage.setItem('profile', JSON.stringify(store));
     },
     setHighscoreSpaceball: (store, action) => {
       store.highscoreSpaceball = action.payload;
+      localStorage.setItem('profile', JSON.stringify(store));
     },
     setHighscoreFish: (store, action) => {
       store.highscoreFish = action.payload;
+      localStorage.setItem('profile', JSON.stringify(store));
     },
     setHighscoreMath: (store, action) => {
       store.highscoreMath = action.payload;
+      localStorage.setItem('profile', JSON.stringify(store));
     },
     setErrorMessage: (store, action) => {
       store.errorMessage = action.payload;
@@ -132,7 +148,7 @@ export const updateAvatar = (avatar) => {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
-        Authorization: getState().profile.accessToken,
+        Authorization: `Bearer ${getState().profile.accessToken}`,
       },
       credentials: "include",
       body: JSON.stringify({ avatar }),
@@ -149,16 +165,19 @@ export const updateAvatar = (avatar) => {
 // Thunk for updating badges
 export const updateBadges = (badges) => {
   return (dispatch, getState) => {
+    const state = getState();
+    const token = state.profile.accessToken;
+    const userId = state.profile.userId;
     const options = {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
-        Authorization: getState().profile.accessToken,
+        Authorization: `Bearer ${token}`,
       },
       credentials: "include",
       body: JSON.stringify({ badges }),
     };
-    fetch(API_URL(`citizen/${getState().profile.userId}/badges`), options)
+    fetch(API_URL(`citizen/${userId}/badges`), options)
       .then((res) => {
         if (!res.ok) {
           throw new Error(`HTTP error! status: ${res.status}`);
@@ -181,7 +200,7 @@ export const updateRanking = (ranking) => {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
-        Authorization: getState().profile.accessToken,
+        Authorization: `Bearer ${getState().profile.accessToken}`,
       },
       credentials: "include",
       body: JSON.stringify({ ranking }),
@@ -202,7 +221,7 @@ export const updateCoins = (coins) => {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
-        Authorization: getState().profile.accessToken,
+        Authorization: `Bearer ${getState().profile.accessToken}`,
       },
       credentials: "include",
       body: JSON.stringify({ coins }),
@@ -223,7 +242,7 @@ export const updateItems = (items) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: getState().profile.accessToken,
+        Authorization: `Bearer ${getState().profile.accessToken}`,
       },
       credentials: "include",
       body: JSON.stringify({ items }),
@@ -244,7 +263,7 @@ export const updateInvestments = (investmentQuantity, investments) => {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
-        Authorization: getState().profile.accessToken,
+        Authorization: `Bearer ${getState().profile.accessToken}`,
       },
       credentials: "include",
       body: JSON.stringify({ investmentQuantity, investments }),
@@ -268,7 +287,7 @@ export const updateEnergy = (energy) => {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
-        Authorization: getState().profile.accessToken,
+        Authorization: `Bearer ${getState().profile.accessToken}`,
       },
       credentials: "include",
       body: JSON.stringify({ energy }),
@@ -289,7 +308,7 @@ export const updateHighscoreSpaceball = (highscoreSpaceball) => {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
-        Authorization: getState().profile.accessToken,
+        Authorization: `Bearer ${getState().profile.accessToken}`,
       },
       credentials: "include",
       body: JSON.stringify({ highscoreSpaceball }),
@@ -315,7 +334,7 @@ export const updateHighscoreFish = (highscoreFish) => {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
-        Authorization: getState().profile.accessToken,
+        Authorization: `Bearer ${getState().profile.accessToken}`,
       },
       credentials: "include",
       body: JSON.stringify({ highscoreFish }),
@@ -339,7 +358,7 @@ export const updateHighscoreMath = (highscoreMath) => {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
-        Authorization: getState().profile.accessToken,
+        Authorization: `Bearer ${getState().profile.accessToken}`,
       },
       credentials: "include",
       body: JSON.stringify({ highscoreMath }),
