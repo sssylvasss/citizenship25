@@ -60,6 +60,7 @@ export const SignIn = () => {
       if (data.success) {
         batch(() => {
           dispatch(profile.actions.setUsername(data.username));
+          dispatch(profile.actions.setUserId(data.userId));
           dispatch(profile.actions.setAccessToken(data.accessToken));
           dispatch(profile.actions.setItems(data.items));
           dispatch(profile.actions.setAvatar(data.avatar));
@@ -82,6 +83,7 @@ export const SignIn = () => {
         batch(() => {
           dispatch(profile.actions.setAccessToken(null));
           dispatch(profile.actions.setUsername(null));
+          dispatch(profile.actions.setUserId(null));
           dispatch(
             profile.actions.setErrorMessage(data.message || "Login failed"),
           );
