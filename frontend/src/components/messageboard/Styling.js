@@ -4,25 +4,23 @@ import styled from "styled-components";
 export const Form = styled.form`
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 100%; 
   margin: 0;
-  padding: 0;
+  padding: 10px 0;
+  flex-shrink: 0;
 `;
 
 export const MessageInput = styled.textarea`
   font-size: 12px;
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  width: 317px;
+  width: 100%;
   background-color: ${(props) => props.theme.colors.primary};
   color: ${(props) => props.theme.colors.text};
-  padding: 10px 10px 20px 10px;
+  padding: 10px;
   outline: none;
-  border-top: 2px solid ${(props) => props.theme.colors.secondary};
-  border-left: none;
-  border-bottom: none;
-  border-right: none;
+  border: 2px solid ${(props) => props.theme.colors.secondary};
+  border-radius: 4px;
+  resize: vertical;
+  min-height: 60px;
   ::placeholder {
     color: ${(props) => props.theme.colors.text};
   }
@@ -30,19 +28,16 @@ export const MessageInput = styled.textarea`
     background-color: ${(props) => props.theme.colors.background};
   }
   @media (max-width: 320px) {
-    width: 277px;
+    font-size: 11px;
   }
   @media (min-width: 768px) {
-    width: 360px;
     font-size: 14px;
   }
 `;
 
 export const SubmitButton = styled.button`
-  position: fixed;
-  bottom: 10px;
-  right: 10px;
-  padding: 5px;
+  padding: 8px 16px;
+  margin-top: 10px;
   text-transform: uppercase;
   color: ${(props) => props.theme.colors.text};
   border: 2px solid ${(props) => props.theme.colors.secondary};
@@ -50,12 +45,14 @@ export const SubmitButton = styled.button`
   border-radius: 4px;
   font-family: "Trispace", serif;
   font-size: 15px;
+  cursor: pointer;
+  align-self: flex-end;
   :hover,
   :focus {
     background-color: ${(props) => props.theme.colors.background};
   }
   @media (min-width: 768px) {
-    padding: 7px;
+    padding: 10px 20px;
     font-size: 16px;
   }
 `;
@@ -65,11 +62,13 @@ export const MessageContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin: 10px 0;
+  height: 100vh;
+  margin:  0;
   background-color: ${(props) => props.theme.colors.background};
-  border-left: 3px solid ${(props) => props.theme.colors.primary};
+  border-left: 6px solid ${(props) => props.theme.colors.primary};
   color: ${(props) => props.theme.colors.text};
-  padding: 10px;
+  padding: 20px 10px;
+  position: relative;
 `;
 
 export const MessageWrapper = styled.div`
@@ -115,8 +114,9 @@ export const MessageTitle = styled.h3`
 
 export const MessageList = styled.div`
   width: 100%;
-  overflow: scroll;
-  height: 100vh;
+  overflow-y: auto;
+  flex: 1;
+  margin-bottom: 10px;
   &::-webkit-scrollbar {
     -webkit-appearance: none;
     width: 10px;
@@ -136,7 +136,7 @@ export const MessageBox = styled.div`
   width: 100%;
   border-bottom: 2px solid ${(props) => props.theme.colors.primary};
   :last-of-type {
-    margin-bottom: 100px;
+    margin-bottom: 10px;
   }
 `;
 

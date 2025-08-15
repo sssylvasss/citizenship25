@@ -9,6 +9,7 @@ export const TableContainer = styled.div`
 `;
 
 export const TableHead = styled.div`
+color: ${(props) => props.theme.colors.text};
   display: grid;
   grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
   padding: 10px;

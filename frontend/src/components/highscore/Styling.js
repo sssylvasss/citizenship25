@@ -126,6 +126,7 @@ export const TableContainer = styled.div`
 `;
 
 export const TableHead = styled.div`
+color: ${(props) => props.theme.colors.text};
   display: flex;
   justify-content: space-between;
   position: relative;
@@ -148,6 +149,7 @@ export const TableTitle = styled.p`
 `;
 
 export const BubbleTitle = styled(TableTitle)`
+color: ${(props) => props.theme.colors.text};
   cursor: pointer;
   position: absolute;
   left: 40%;
