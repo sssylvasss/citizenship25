@@ -5,12 +5,12 @@ import { FaTimes } from "react-icons/fa";
 export const MainBar = styled.div`
   display: flex;
   justify-content: center;
-  background-color: ${(props) => props.theme.secondary};
+  background-color: ${(props) => props.theme.colors.secondary};
   position: fixed;
   bottom: 60px;
   left: 0;
   padding: 0;
-  color: ${(props) => props.theme.textColor};
+  color: ${(props) => props.theme.colors.text};
   opacity: 0.85;
   width: 100%;
   overflow: hidden;
@@ -27,6 +27,7 @@ const Roller = keyframes`
 `;
 
 export const RollingText = styled.div`
+  color: ${(props) => props.theme.colors.text};
   display: flex;
   align-items: center;
   font-size: 11px;
@@ -50,8 +51,8 @@ export const WeatherText = styled.div`
   align-items: center;
   padding: 10px 10px 5px 0;
   text-transform: uppercase;
-  color: ${(props) => props.theme.textColor};
-  border-right: 2px solid ${(props) => props.theme.textColor};
+  color: ${(props) => props.theme.colors.text};
+  border-right: 2px solid ${(props) => props.theme.colors.text};
   @media (min-width: 768px) {
     font-size: 14px;
   }
@@ -64,7 +65,7 @@ export const Button = styled.button`
   font-weight: 400;
   margin-left: 5px;
   font-size: 11px;
-  color: ${(props) => props.theme.textColor};
+  color: ${(props) => props.theme.colors.text};
   text-decoration: underline;
   @media (min-width: 768px) {
     font-weight: bold;
@@ -74,13 +75,13 @@ export const Button = styled.button`
 `;
 
 export const DialogContainer = styled.div`
-  background-color: ${(props) => props.theme.backgroundColor};
-  border: 2px solid ${(props) => props.theme.primary};
+  background-color: ${(props) => props.theme.colors.background};
+  border: 2px solid ${(props) => props.theme.colors.primary};
   display: flex;
   flex-direction: column;
   padding: 10px;
   max-width: 320px;
-  color: ${(props) => props.theme.textColor};
+  color: ${(props) => props.theme.colors.text};
   @media (min-width: 768px) {
     max-width: 350px;
     padding: 15px;
@@ -96,7 +97,7 @@ export const ForecastTitle = styled.h2`
 `;
 
 export const WeatherContainer = styled.div`
-  border-bottom: 2px solid ${(props) => props.theme.primary};
+  border-bottom: 2px solid ${(props) => props.theme.colors.primary};
   display: flex;
   justify-content: space-between;
 `;
@@ -104,6 +105,7 @@ export const WeatherContainer = styled.div`
 export const DayText = styled.p`
   font-size: 16px;
   text-transform: uppercase;
+
 `;
 
 //Housing
@@ -173,12 +175,12 @@ export const BuyButton = styled.button`
   width: fit-content;
   text-transform: uppercase;
   font-family: "Trispace", serif;
-  color: ${(props) => props.theme.textColor};
-  background-color: ${(props) => props.theme.primary};
-  border: 2px solid ${(props) => props.theme.secondary};
+  color: ${(props) => props.theme.colors.text};
+  background-color: ${(props) => props.theme.colors.primary};
+  border: 2px solid ${(props) => props.theme.colors.secondary};
   :hover,
   :focus {
-    background-color: ${(props) => props.theme.secondary};
+    background-color: ${(props) => props.theme.colors.secondary};
   }
 `;
 
@@ -193,7 +195,7 @@ export const CloseIcon = styled(FaTimes)`
     transform: scale(1.2);
   }
   :focus {
-    color: ${(props) => props.theme.primary};
+    color: ${(props) => props.theme.colors.primary};
   }
   @media (min-width: 768px) {
     font-size: 20px;
@@ -210,7 +212,7 @@ export const BuyDialog = styled.div`
   padding: 15px;
   font-size: 14px;
   max-width: 300px;
-  background-color: ${(props) => props.theme.backgroundColor};
-  border: 2px solid ${(props) => props.theme.secondary};
-  color: ${(props) => props.theme.textColor};
+  background-color: ${(props) => props.theme.colors.background};
+  border: 2px solid ${(props) => props.theme.colors.secondary};
+  color: ${(props) => props.theme.colors.text};
 `;
