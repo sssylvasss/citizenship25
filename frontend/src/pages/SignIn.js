@@ -20,7 +20,6 @@ import {
   StartButton,
   Star,
   ShootingStar,
-  EnterButton
 } from "../components/signinupform/Styling";
 import { API_URL } from "../utils/utils";
 
