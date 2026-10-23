@@ -40,8 +40,6 @@ const passwordLimiter = rateLimit({
 
 // MongoDB connection options based on environment
 const mongooseOptions = {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
   dbName: 'spaceAPI',
   // Only use these options when connecting to Atlas/remote MongoDB
   ...(process.env.MONGO_URL && process.env.NODE_ENV === 'production'
@@ -71,6 +69,9 @@ console.log('Server starting with configuration:', {
   allowedOrigins,
   mongoDbUrl: mongoUrl.replace(/\/\/[^:]+:[^@]+@/, '//<credentials>@'),
 });
+
+// Keep Mongoose 6 default explicitly (Mongoose 7 flips it to false)
+mongoose.set('strictQuery', true);
 
 mongoose
   .connect(mongoUrl, mongooseOptions)
