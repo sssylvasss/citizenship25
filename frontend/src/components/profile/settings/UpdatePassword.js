@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
+import { API_URL } from "../../../utils/utils";
 import {
   PasswordForm,
   ChangeTitle,
@@ -33,14 +34,11 @@ export const UpdatePassword = () => {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          Authorization: accessToken,
+          Authorization: `Bearer ${accessToken}`,
         },
         body: JSON.stringify({ password, newPassword }),
       };
-      fetch(
-        `https://citizen-ship.herokuapp.com/citizen/${userId}/password`,
-        options,
-      )
+      fetch(API_URL(`citizen/${userId}/password`), options)
         .then((res) => res.json())
         .then((data) => {
           if (data.success) {
@@ -54,6 +52,10 @@ export const UpdatePassword = () => {
             setFail(true);
             setNoMatch(false);
           }
+        })
+        .catch(() => {
+          setFail(true);
+          setNoMatch(false);
         });
     } else {
       setNoMatch(true);
