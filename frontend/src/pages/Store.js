@@ -7,8 +7,6 @@ import { Header } from "../components/header/Header";
 import { Camera } from "../components/header/Camera";
 import { Main, Wrapper } from "../styledcomponents/StyledTheme";
 
-import { StoreContainer, StoreTitle } from "../components/store/Styling";
-
 export const Store = () => {
   const accessToken = useSelector((store) => store.profile.accessToken);
   const navigate = useNavigate();
