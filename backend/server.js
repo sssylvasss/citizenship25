@@ -72,6 +72,8 @@ console.log('Server starting with configuration:', {
 
 // Keep Mongoose 6 default explicitly (Mongoose 7 flips it to false)
 mongoose.set('strictQuery', true);
+// Treat user-supplied objects in query filters as literal values (blocks $ne/$gt injection)
+mongoose.set('sanitizeFilter', true);
 
 mongoose
   .connect(mongoUrl, mongooseOptions)
@@ -94,10 +96,14 @@ mongoose.Promise = Promise;
 const sanitizeCitizen = (citizen) => {
   if (!citizen) return null;
   const sanitized = citizen.toObject ? citizen.toObject() : { ...citizen };
-  // Never send password hash in response
+  // Never send password hash or stored token in response
   delete sanitized.password;
+  delete sanitized.accessToken;
   return sanitized;
 };
+
+// Fields never exposed by public (unauthenticated) endpoints
+const PRIVATE_FIELDS = '-password -email -accessToken';
 
 const Citizen = mongoose.model('Citizen', {
   username: {
@@ -250,6 +256,15 @@ const authenticateCitizen = async (req, res, next) => {
   }
 };
 
+// Only allow citizens to modify their own account (use after authenticateCitizen)
+const requireSelf = (req, res, next) => {
+  const targetId = req.params.id || req.params.userid;
+  if (targetId !== req.citizen._id.toString()) {
+    return res.status(403).json({ success: false, message: 'Forbidden' });
+  }
+  return next();
+};
+
 // CORS configuration
 app.use(
   cors({
@@ -289,7 +304,10 @@ app.get('/citizens', async (req, res) => {
 
   };
 
-  const allCitizens = await Citizen.find().sort(sortCitizens(sort)).exec();
+  const allCitizens = await Citizen.find()
+    .select(PRIVATE_FIELDS)
+    .sort(sortCitizens(sort))
+    .exec();
 
   try {
     return res.json({ allCitizens });
@@ -302,7 +320,9 @@ app.get('/citizens', async (req, res) => {
 app.get('/citizen/:username', async (req, res) => {
   const { username } = req.params;
   try {
-    const citizenProfile = await Citizen.findOne({ username }).exec();
+    const citizenProfile = await Citizen.findOne({ username })
+      .select(PRIVATE_FIELDS)
+      .exec();
 
     if (!citizenProfile) {
       return res.status(404).json({
@@ -328,6 +348,7 @@ app.get('/citizen/:username', async (req, res) => {
 app.patch(
   '/citizen/:id/password',
   authenticateCitizen,
+  requireSelf,
   passwordLimiter,
   async (req, res) => {
     const { _id } = req.citizen;
@@ -446,6 +467,13 @@ app.post('/signup', async (req, res) => {
 app.post('/signin', passwordLimiter, async (req, res) => {
   const { username, password } = req.body;
 
+  if (typeof username !== 'string' || typeof password !== 'string') {
+    return res.status(401).json({
+      success: false,
+      message: 'Invalid username or password',
+    });
+  }
+
   try {
     const citizen = await Citizen.findOne({ username });
 
@@ -510,7 +538,7 @@ app.get('/citizenmessage', async (req, res) => {
 });
 
 // POST message on messageboard
-app.post('/citizenmessage/:userid', authenticateCitizen);
+app.post('/citizenmessage/:userid', authenticateCitizen, requireSelf);
 app.post('/citizenmessage/:userid', async (req, res) => {
   const { message } = req.body;
   const { userid } = req.params;
@@ -528,15 +556,17 @@ app.post('/citizenmessage/:userid', async (req, res) => {
 });
 
 // PATCH for updating avatar
-app.patch('/citizen/:id/avatar', authenticateCitizen);
+app.patch('/citizen/:id/avatar', authenticateCitizen, requireSelf);
 app.patch('/citizen/:id/avatar', async (req, res) => {
   const { id } = req.params;
   try {
-    const updatedAvatar = await Citizen.findByIdAndUpdate(id, req.body, {
-      new: true,
-    });
+    const updatedAvatar = await Citizen.findByIdAndUpdate(
+      id,
+      { avatar: req.body.avatar },
+      { new: true },
+    );
     if (updatedAvatar) {
-      res.json(updatedAvatar);
+      res.json(sanitizeCitizen(updatedAvatar));
     } else {
       res.status(404).json({ message: 'Not found!' });
     }
@@ -546,7 +576,7 @@ app.patch('/citizen/:id/avatar', async (req, res) => {
 });
 
 // PATCH for increasing badges
-app.patch('/citizen/:id/badges', authenticateCitizen, async (req, res) => {
+app.patch('/citizen/:id/badges', authenticateCitizen, requireSelf, async (req, res) => {
   const { id } = req.params;
   try {
     const updatedBadges = await Citizen.findByIdAndUpdate(
@@ -559,7 +589,7 @@ app.patch('/citizen/:id/badges', authenticateCitizen, async (req, res) => {
       { new: true },
     );
     if (updatedBadges) {
-      res.json(updatedBadges);
+      res.json(sanitizeCitizen(updatedBadges));
     } else {
       res.status(404).json({ message: 'Not found!' });
     }
@@ -569,7 +599,7 @@ app.patch('/citizen/:id/badges', authenticateCitizen, async (req, res) => {
 });
 
 // PATCH for increasing ranking
-app.patch('/citizen/:id/ranking', authenticateCitizen);
+app.patch('/citizen/:id/ranking', authenticateCitizen, requireSelf);
 app.patch('/citizen/:id/ranking', async (req, res) => {
   const { id } = req.params;
   try {
@@ -583,7 +613,7 @@ app.patch('/citizen/:id/ranking', async (req, res) => {
       { new: true },
     );
     if (updatedRanking) {
-      res.json(updatedRanking);
+      res.json(sanitizeCitizen(updatedRanking));
     } else {
       res.status(404).json({ message: 'Not found!' });
     }
@@ -593,7 +623,7 @@ app.patch('/citizen/:id/ranking', async (req, res) => {
 });
 
 // PATCH for increasing coins
-app.patch('/citizen/:id/coins', authenticateCitizen);
+app.patch('/citizen/:id/coins', authenticateCitizen, requireSelf);
 app.patch('/citizen/:id/coins', async (req, res) => {
   const { id } = req.params;
   try {
@@ -607,7 +637,7 @@ app.patch('/citizen/:id/coins', async (req, res) => {
       { new: true },
     );
     if (updatedCoins) {
-      res.json(updatedCoins);
+      res.json(sanitizeCitizen(updatedCoins));
     } else {
       res.status(404).json({ message: 'Not found!' });
     }
@@ -617,7 +647,7 @@ app.patch('/citizen/:id/coins', async (req, res) => {
 });
 
 // PATCH for adding items from shop
-app.post('/citizen/:id/items', authenticateCitizen);
+app.post('/citizen/:id/items', authenticateCitizen, requireSelf);
 app.post('/citizen/:id/items', async (req, res) => {
   const { id } = req.params;
   try {
@@ -629,7 +659,7 @@ app.post('/citizen/:id/items', async (req, res) => {
       { new: true },
     );
     if (updatedItems) {
-      res.json(updatedItems);
+      res.json(sanitizeCitizen(updatedItems));
     } else {
       res.status(404).json({ message: 'Not found!' });
     }
@@ -639,7 +669,7 @@ app.post('/citizen/:id/items', async (req, res) => {
 });
 
 // PATCH for updating investments
-app.patch('/citizen/:id/investments', authenticateCitizen);
+app.patch('/citizen/:id/investments', authenticateCitizen, requireSelf);
 app.patch('/citizen/:id/investments', async (req, res) => {
   const { id } = req.params;
   try {
@@ -654,7 +684,7 @@ app.patch('/citizen/:id/investments', async (req, res) => {
       { new: true },
     );
     if (updatedInvestments) {
-      res.json(updatedInvestments);
+      res.json(sanitizeCitizen(updatedInvestments));
     } else {
       res.status(404).json({ message: 'Not found!' });
     }
@@ -664,7 +694,7 @@ app.patch('/citizen/:id/investments', async (req, res) => {
 });
 
 // PATCH for increasing caloryintake
-app.patch('/citizen/:id/energy', authenticateCitizen);
+app.patch('/citizen/:id/energy', authenticateCitizen, requireSelf);
 app.patch('/citizen/:id/energy', async (req, res) => {
   const { id } = req.params;
   try {
@@ -678,7 +708,7 @@ app.patch('/citizen/:id/energy', async (req, res) => {
       { new: true },
     );
     if (updatedEnergy) {
-      res.json(updatedEnergy);
+      res.json(sanitizeCitizen(updatedEnergy));
     } else {
       res.status(404).json({ message: 'Not found!' });
     }
@@ -688,17 +718,17 @@ app.patch('/citizen/:id/energy', async (req, res) => {
 });
 
 // PATCH for updating highscore spaceball
-app.patch('/citizen/:id/highscoreSpaceball', authenticateCitizen);
+app.patch('/citizen/:id/highscoreSpaceball', authenticateCitizen, requireSelf);
 app.patch('/citizen/:id/highscoreSpaceball', async (req, res) => {
   const { id } = req.params;
   try {
     const updatedHighscoreSpaceball = await Citizen.findByIdAndUpdate(
       id,
-      req.body,
+      { highscoreSpaceball: req.body.highscoreSpaceball },
       { new: true },
     );
     if (updatedHighscoreSpaceball) {
-      res.json(updatedHighscoreSpaceball);
+      res.json(sanitizeCitizen(updatedHighscoreSpaceball));
     } else {
       res.status(404).json({ message: 'Not found!' });
     }
@@ -708,15 +738,17 @@ app.patch('/citizen/:id/highscoreSpaceball', async (req, res) => {
 });
 
 // PATCH for updating highscore fish farm
-app.patch('/citizen/:id/highscoreFish', authenticateCitizen);
+app.patch('/citizen/:id/highscoreFish', authenticateCitizen, requireSelf);
 app.patch('/citizen/:id/highscoreFish', async (req, res) => {
   const { id } = req.params;
   try {
-    const updatedHighscoreFish = await Citizen.findByIdAndUpdate(id, req.body, {
-      new: true,
-    });
+    const updatedHighscoreFish = await Citizen.findByIdAndUpdate(
+      id,
+      { highscoreFish: req.body.highscoreFish },
+      { new: true },
+    );
     if (updatedHighscoreFish) {
-      res.json(updatedHighscoreFish);
+      res.json(sanitizeCitizen(updatedHighscoreFish));
     } else {
       res.status(404).json({ message: 'Not found!' });
     }
@@ -726,15 +758,17 @@ app.patch('/citizen/:id/highscoreFish', async (req, res) => {
 });
 
 // PATCH for updating highscore math
-app.patch('/citizen/:id/highscoreMath', authenticateCitizen);
+app.patch('/citizen/:id/highscoreMath', authenticateCitizen, requireSelf);
 app.patch('/citizen/:id/highscoreMath', async (req, res) => {
   const { id } = req.params;
   try {
-    const updatedHighscoreMath = await Citizen.findByIdAndUpdate(id, req.body, {
-      new: true,
-    });
+    const updatedHighscoreMath = await Citizen.findByIdAndUpdate(
+      id,
+      { highscoreMath: req.body.highscoreMath },
+      { new: true },
+    );
     if (updatedHighscoreMath) {
-      res.json(updatedHighscoreMath);
+      res.json(sanitizeCitizen(updatedHighscoreMath));
     } else {
       res.status(404).json({ message: 'Not found!' });
     }
